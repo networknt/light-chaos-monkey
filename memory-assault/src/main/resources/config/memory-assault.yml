@@ -1,7 +1,7 @@
 # Light Chaos Monkey Memory Assault Handler Configuration.
 
 # Enable the handler if set to true. Otherwise, the request will passthrough.
-enabled: true
+enabled: false
 # How many requests are to be attacked. 1 each request, 5 each 5th request is attacked
 level: 10
 # Duration to assault memory when requested fill amount is reached in ms.
