@@ -28,7 +28,6 @@ public class KillappAssaultHandler implements MiddlewareHandler {
             try {
                 logger.info("Chaos Monkey - I am killing the Server!");
                 Server.shutdown();
-                Thread.sleep(3000); // wait before shutdown hooks to complete
                 System.exit(0);
             } catch (Exception e) {
                 logger.info("Chaos Monkey - Unable to kill the Server!");
