@@ -9,6 +9,8 @@ import io.undertow.util.Headers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 /**
  * Update the configuration for chaos monkey handlers on the fly.
  *
@@ -27,26 +29,26 @@ public class ChaosMonkeyPostHandler implements LightHttpHandler {
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
         if(config.isEnabled()) {
             String assault = exchange.getQueryParameters().get("assault").getFirst();
-            String json = exchange.getAttachment(BodyHandler.REQUEST_BODY_STRING);
+            Map<String, Object> bodyMap = (Map<String, Object>)exchange.getAttachment(BodyHandler.REQUEST_BODY);
             // set the config object directly with the public static variable.
             switch (assault) {
                 case "com.networknt.chaos.ExceptionAssaultHandler":
-                    ExceptionAssaultHandler.config = JsonMapper.fromJson(json, ExceptionAssaultConfig.class);
+                    ExceptionAssaultHandler.config = Config.getInstance().getMapper().convertValue(bodyMap, ExceptionAssaultConfig.class);
                     break;
                 case "com.networknt.chaos.KillappAssaultHandler":
-                    KillappAssaultHandler.config = JsonMapper.fromJson(json, KillappAssaultConfig.class);
+                    KillappAssaultHandler.config = Config.getInstance().getMapper().convertValue(bodyMap, KillappAssaultConfig.class);
                     break;
                 case "com.networknt.chaos.LatencyAssaultHandler":
-                    LatencyAssaultHandler.config = JsonMapper.fromJson(json, LatencyAssaultConfig.class);
+                    LatencyAssaultHandler.config = Config.getInstance().getMapper().convertValue(bodyMap, LatencyAssaultConfig.class);
                     break;
                 case "com.networknt.chaos.MemoryAssaultHandler":
-                    MemoryAssaultHandler.config = JsonMapper.fromJson(json, MemoryAssaultConfig.class);
+                    MemoryAssaultHandler.config = Config.getInstance().getMapper().convertValue(bodyMap, MemoryAssaultConfig.class);
                     break;
                 default:
                     logger.error("Invalid assault " + assault);
             }
             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
-            exchange.getResponseSender().send(json);
+            exchange.getResponseSender().send(JsonMapper.toJson(bodyMap));
         } else {
             logger.error("Chaos Monkey API is disabled in chaos-monkey.yml");
             setExchangeStatus(exchange, HANDLER_IS_DISABLED, "Chaos Monkey");
