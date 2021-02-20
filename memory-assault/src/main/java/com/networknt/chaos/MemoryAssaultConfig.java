@@ -3,6 +3,7 @@ package com.networknt.chaos;
 public class MemoryAssaultConfig {
     public static final String CONFIG_NAME = "memory-assault";
     boolean enabled;
+    boolean bypass;
     int level;
     int memoryMillisecondsHoldFilledMemory;
     int memoryMillisecondsWaitNextIncrease;
@@ -15,6 +16,14 @@ public class MemoryAssaultConfig {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isBypass() {
+        return bypass;
+    }
+
+    public void setBypass(boolean bypass) {
+        this.bypass = bypass;
     }
 
     public int getLevel() {

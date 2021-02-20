@@ -3,6 +3,7 @@ package com.networknt.chaos;
 public class LatencyAssaultConfig {
     final public static String CONFIG_NAME = "latency-assault";
     boolean enabled;
+    boolean bypass;
     int level;
     int latencyRangeStart;
     int latencyRangeEnd;
@@ -13,6 +14,14 @@ public class LatencyAssaultConfig {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isBypass() {
+        return bypass;
+    }
+
+    public void setBypass(boolean bypass) {
+        this.bypass = bypass;
     }
 
     public int getLevel() {

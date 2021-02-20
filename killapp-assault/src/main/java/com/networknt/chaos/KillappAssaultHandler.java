@@ -24,7 +24,7 @@ public class KillappAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
-        if(isEnabled() && isTrouble()) {
+        if(isEnabled() && isTrouble() && !config.isBypass()) {
             try {
                 logger.info("Chaos Monkey - I am killing the Server!");
                 Server.shutdown();

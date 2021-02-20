@@ -23,7 +23,7 @@ public class LatencyAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
-        if(isEnabled() && isTrouble()) {
+        if(isEnabled() && isTrouble() && !config.isBypass()) {
             int i = determineLatency();
             logger.info("Chaos Monkey - I am sleeping for " + i + " milliseconds!");
             try {

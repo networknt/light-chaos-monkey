@@ -23,7 +23,7 @@ public class ExceptionAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
-        if(isEnabled() && isTrouble()) {
+        if(isEnabled() && isTrouble() && !config.isBypass()) {
             logger.info("Chaos Monkey - I am throwing an AssaultException!");
             throw new AssaultException("Chaos Monday AssaultException");
         }

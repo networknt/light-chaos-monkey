@@ -29,7 +29,7 @@ public class MemoryAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
-        if(isEnabled() && isTrouble()) {
+        if(isEnabled() && isTrouble() && !config.isBypass()) {
             logger.info("Chaos Monkey - I am eating free memory!");
             eatFreeMemory();
         }
