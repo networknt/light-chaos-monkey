@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.0.24](https://github.com/networknt/light-chaos-monkey/tree/2.0.24) (2021-02-24)
+
+
+**Merged pull requests:**
+
+
+- fixes \#10 update the comments in the config files [\#11](https://github.com/networknt/light-chaos-monkey/pull/11) ([stevehu](https://github.com/stevehu))
+- fixes \#8 update the chaos monkey post handler to fix the body [\#9](https://github.com/networknt/light-chaos-monkey/pull/9) ([stevehu](https://github.com/stevehu))
+- Issue6 [\#7](https://github.com/networknt/light-chaos-monkey/pull/7) ([stevehu](https://github.com/stevehu))
+- fixes \#4 remove the sleep time in hte KillappAssaultHandler [\#5](https://github.com/networknt/light-chaos-monkey/pull/5) ([stevehu](https://github.com/stevehu))
 ## [2.0.23](https://github.com/networknt/light-chaos-monkey/tree/2.0.23) (2021-01-29)
 
 
