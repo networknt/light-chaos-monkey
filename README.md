@@ -17,9 +17,11 @@ These questions led me to dive into [Chaos Engineering](https://principlesofchao
 
 ### How does it work?
 
-As we know, the light-4j framework is using middleware handlers to address cross-cutting concerns in the request/response chain in the same service instance or at the network level with light-router or light-proxy. 
+As we know, the light-4j framework is using middleware handlers to address cross-cutting concerns in the request/response chain in the same service instance or at the network level with [light-router](https://github.com/networknt/light-router), [light-proxy](https://github.com/networknt/light-proxy) or [light-mesh/http-sidecar](https://github.com/networknt/light-mesh). 
 
 To simulate some of the Chaos Monkey behaviours, we built several middleware handlers that can be injected into the request/response chain. These middleware handlers simulate network latency, out of memory, runtime exception and application shutdown etc. 
+
+For more information, please visit the [document](https://doc.networknt.com/style/light-chaos-monkey/) and [tutorial](https://doc.networknt.com/tutorial/chaos-monkey/). 
 
 ### Dynamic Configuration at runtime
 
