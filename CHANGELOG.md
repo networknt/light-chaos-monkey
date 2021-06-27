@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.0.28](https://github.com/networknt/light-chaos-monkey/tree/2.0.28) (2021-06-27)
+
+
+**Merged pull requests:**
+
+
+- fixes \#13 update the README.md to add links to the repos and docs [\#14](https://github.com/networknt/light-chaos-monkey/pull/14) ([stevehu](https://github.com/stevehu))
 ## [2.0.27](https://github.com/networknt/light-chaos-monkey/tree/2.0.27) (2021-05-25)
 
 
