@@ -6,6 +6,8 @@
 **Merged pull requests:**
 
 
+
+
 ## [2.0.28](https://github.com/networknt/light-chaos-monkey/tree/2.0.28) (2021-06-27)
 
 
