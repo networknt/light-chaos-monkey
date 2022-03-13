@@ -52,6 +52,11 @@ public class ExceptionAssaultHandler implements MiddlewareHandler {
         ModuleRegistry.registerModule(ExceptionAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(ExceptionAssaultConfig.CONFIG_NAME), null);
     }
 
+    @Override
+    public void reload() {
+        config = (ExceptionAssaultConfig) Config.getInstance().getJsonObjectConfig(ExceptionAssaultConfig.CONFIG_NAME, ExceptionAssaultConfig.class);
+    }
+
     private boolean isTrouble() {
         return getTroubleRandom() >= config.getLevel();
     }
@@ -59,5 +64,6 @@ public class ExceptionAssaultHandler implements MiddlewareHandler {
     public int getTroubleRandom() {
         return ThreadLocalRandom.current().nextInt(1, config.getLevel() + 1);
     }
+
 
 }

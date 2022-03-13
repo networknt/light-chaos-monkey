@@ -68,6 +68,12 @@ public class LatencyAssaultHandler implements MiddlewareHandler {
         }
     }
 
+    @Override
+    public void reload() {
+        config = (LatencyAssaultConfig) Config.getInstance().getJsonObjectConfig(LatencyAssaultConfig.CONFIG_NAME, LatencyAssaultConfig.class);
+    }
+
+
     private boolean isTrouble() {
         return getTroubleRandom() >= config.getLevel();
     }

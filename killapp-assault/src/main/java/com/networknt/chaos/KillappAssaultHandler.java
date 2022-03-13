@@ -58,6 +58,11 @@ public class KillappAssaultHandler implements MiddlewareHandler {
         ModuleRegistry.registerModule(KillappAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(KillappAssaultConfig.CONFIG_NAME), null);
     }
 
+    @Override
+    public void reload() {
+        config = (KillappAssaultConfig) Config.getInstance().getJsonObjectConfig(KillappAssaultConfig.CONFIG_NAME, KillappAssaultConfig.class);
+    }
+
     private boolean isTrouble() {
         return getTroubleRandom() >= config.getLevel();
     }
