@@ -58,6 +58,11 @@ public class MemoryAssaultHandler implements MiddlewareHandler {
         ModuleRegistry.registerModule(MemoryAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(MemoryAssaultConfig.CONFIG_NAME), null);
     }
 
+    @Override
+    public void reload() {
+        config = (MemoryAssaultConfig) Config.getInstance().getJsonObjectConfig(MemoryAssaultConfig.CONFIG_NAME, MemoryAssaultConfig.class);
+    }
+
     private void eatFreeMemory() {
         @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         Vector<byte[]> memoryVector = new Vector<>();
