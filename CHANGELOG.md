@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.1](https://github.com/networknt/light-chaos-monkey/tree/2.1.1) (2022-04-26)
+
+
+**Merged pull requests:**
+
+
+- implement middleware config reload, light-4j issuse-1143 [\#15](https://github.com/networknt/light-chaos-monkey/pull/15) ([GavinChenYan](https://github.com/GavinChenYan))
 ## [2.1.0](https://github.com/networknt/light-chaos-monkey/tree/2.1.0) (2022-02-27)
 
 
