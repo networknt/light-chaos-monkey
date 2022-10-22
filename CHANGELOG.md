@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.2](https://github.com/networknt/light-chaos-monkey/tree/2.1.2) (2022-10-22)
+
+
+**Merged pull requests:**
+
+
+- fixes \#16 externalize the config files for each module for default in… [\#17](https://github.com/networknt/light-chaos-monkey/pull/17) ([stevehu](https://github.com/stevehu))
 ## [2.1.1](https://github.com/networknt/light-chaos-monkey/tree/2.1.1) (2022-04-26)
 
 
