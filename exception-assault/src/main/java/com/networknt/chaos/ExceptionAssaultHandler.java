@@ -23,10 +23,12 @@ public class ExceptionAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
+        if(logger.isDebugEnabled()) logger.debug("ExceptionAssaultHandler.handleRequest starts.");
         if(isEnabled() && isTrouble() && !config.isBypass()) {
             logger.info("Chaos Monkey - I am throwing an AssaultException!");
             throw new AssaultException("Chaos Monday AssaultException");
         }
+        if(logger.isDebugEnabled()) logger.debug("ExceptionAssaultHandler.handleRequest ends.");
         Handler.next(exchange, next);
     }
 

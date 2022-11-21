@@ -27,6 +27,7 @@ public class ChaosMonkeyPostHandler implements LightHttpHandler {
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
+        if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyPostHandler.handleRequest starts.");
         if(config.isEnabled()) {
             String assault = exchange.getQueryParameters().get("assault").getFirst();
             Map<String, Object> bodyMap = (Map<String, Object>)exchange.getAttachment(BodyHandler.REQUEST_BODY);
@@ -48,9 +49,11 @@ public class ChaosMonkeyPostHandler implements LightHttpHandler {
                     logger.error("Invalid assault " + assault);
             }
             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
+            if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyPostHandler.handleRequest ends.");
             exchange.getResponseSender().send(JsonMapper.toJson(bodyMap));
         } else {
             logger.error("Chaos Monkey API is disabled in chaos-monkey.yml");
+            if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyPostHandler.handleRequest ends with an error.");
             setExchangeStatus(exchange, HANDLER_IS_DISABLED, "Chaos Monkey");
         }
     }
