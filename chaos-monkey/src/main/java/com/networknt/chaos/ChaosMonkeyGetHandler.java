@@ -19,15 +19,17 @@ import java.util.Map;
  *
  */
 public class ChaosMonkeyGetHandler implements LightHttpHandler {
-    public static ChaosMonkeyConfig config = (ChaosMonkeyConfig) Config.getInstance().getJsonObjectConfig(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyConfig.class);
     private static final Logger logger = LoggerFactory.getLogger(ChaosMonkeyGetHandler.class);
+    public static ChaosMonkeyConfig config;
 
     public ChaosMonkeyGetHandler() {
         logger.info("ChaosMonkeyGetHandler constructed");
+        config = (ChaosMonkeyConfig) Config.getInstance().getJsonObjectConfig(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyConfig.class);
     }
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
+        if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyGetHandler.handleRequest starts.");
         Map<String, Object> configMap = new HashMap<>();
         Map<String, Object> registry = ModuleRegistry.getRegistry();
         configMap.put(ExceptionAssaultHandler.class.getName(), ExceptionAssaultHandler.config);
@@ -35,6 +37,7 @@ public class ChaosMonkeyGetHandler implements LightHttpHandler {
         configMap.put(LatencyAssaultHandler.class.getName(), LatencyAssaultHandler.config);
         configMap.put(MemoryAssaultHandler.class.getName(), MemoryAssaultHandler.config);
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
+        if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyGetHandler.handleRequest ends.");
         exchange.getResponseSender().send(JsonMapper.toJson(configMap));
     }
 }

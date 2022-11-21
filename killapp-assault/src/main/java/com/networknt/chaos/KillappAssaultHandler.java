@@ -24,6 +24,7 @@ public class KillappAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
+        if(logger.isDebugEnabled()) logger.debug("KillappAssaultHandler.handleRequest starts.");
         if(isEnabled() && isTrouble() && !config.isBypass()) {
             try {
                 logger.info("Chaos Monkey - I am killing the Server!");
@@ -33,6 +34,7 @@ public class KillappAssaultHandler implements MiddlewareHandler {
                 logger.info("Chaos Monkey - Unable to kill the Server!");
             }
         }
+        if(logger.isDebugEnabled()) logger.debug("KillappAssaultHandler.handleRequest ends.");
         Handler.next(exchange, next);
     }
 
