@@ -99,9 +99,17 @@
         <version.junit>5.0.1</version.junit>
         <version.undertow>2.3.0.Final</version.undertow>
         <version.snakeyaml>1.33</version.snakeyaml>
-        <versions.maven-version>2.4</versions.maven-version>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
-        <version.maven-javadoc>3.1.0</version.maven-javadoc>
+        <version.versions-maven>2.14.2</version.versions-maven>
+        <version.maven-javadoc>3.4.1</version.maven-javadoc>
+        <version.nexus-staging-maven>1.6.13</version.nexus-staging-maven>
+        <version.maven-source>3.2.1</version.maven-source>
+        <version.maven-surefire>2.22.2</version.maven-surefire>
+        <version.maven-failsafe>2.22.2</version.maven-failsafe>
+        <version.build-helper-maven>3.3.0</version.build-helper-maven>
+        <version.jacoco-maven>0.8.8</version.jacoco-maven>
+        <version.maven-deploy>3.0.0</version.maven-deploy>
+        <version.maven-compiler>3.10.1</version.maven-compiler>    
     </properties>
 
 
@@ -265,12 +273,12 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions.maven-version}</version>
+                <version>${version.versions-maven}</version>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
+                <version>${version.nexus-staging-maven}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
@@ -289,7 +297,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${version.maven-source}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -315,7 +323,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>${version.maven-surefire}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
@@ -328,7 +336,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>${version.maven-failsafe}</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
@@ -345,7 +353,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.9.1</version>
+                <version>${version.build-helper-maven}</version>
                 <executions>
                     <execution>
                         <id>add-test-source</id>
@@ -378,7 +386,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>${version.jacoco-maven}</version>
                 <executions>
                     <execution>
                         <id>pre-unit-test</id>
@@ -402,12 +410,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
+                <version>${version.maven-deploy}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${version.maven-compiler}</version>
                 <configuration>
                     <release>${java.version}</release>
                 </configuration>
