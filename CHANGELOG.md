@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.6](https://github.com/networknt/light-chaos-monkey/tree/2.1.6) (2023-02-06)
+
+
+**Merged pull requests:**
+
+
+- fixes \#20 upgrade maven plugin versions [\#21](https://github.com/networknt/light-chaos-monkey/pull/21) ([stevehu](https://github.com/stevehu))
 ## [2.1.5](https://github.com/networknt/light-chaos-monkey/tree/2.1.5) (2023-01-04)
 
 
