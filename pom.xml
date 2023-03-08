@@ -98,7 +98,7 @@
         <version.logback>1.2.11</version.logback>
         <version.junit>5.0.1</version.junit>
         <version.undertow>2.3.3.Final</version.undertow>
-        <version.snakeyaml>1.33</version.snakeyaml>
+        <version.snakeyaml>2.0</version.snakeyaml>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
         <version.versions-maven>2.14.2</version.versions-maven>
         <version.maven-javadoc>3.4.1</version.maven-javadoc>
