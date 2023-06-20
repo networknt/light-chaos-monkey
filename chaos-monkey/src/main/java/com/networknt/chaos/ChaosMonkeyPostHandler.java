@@ -4,6 +4,7 @@ import com.networknt.body.BodyHandler;
 import com.networknt.config.Config;
 import com.networknt.config.JsonMapper;
 import com.networknt.handler.LightHttpHandler;
+import com.networknt.httpstring.AttachmentConstants;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class ChaosMonkeyPostHandler implements LightHttpHandler {
         if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyPostHandler.handleRequest starts.");
         if(config.isEnabled()) {
             String assault = exchange.getQueryParameters().get("assault").getFirst();
-            Map<String, Object> bodyMap = (Map<String, Object>)exchange.getAttachment(BodyHandler.REQUEST_BODY);
+            Map<String, Object> bodyMap = (Map<String, Object>)exchange.getAttachment(AttachmentConstants.REQUEST_BODY);
             // set the config object directly with the public static variable.
             switch (assault) {
                 case "com.networknt.chaos.ExceptionAssaultHandler":
