@@ -7,6 +7,8 @@
 
 
 - fixes \#24 make all handlers to be disabled by default [\#25](https://github.com/networknt/light-chaos-monkey/pull/25) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.22](https://github.com/networknt/light-chaos-monkey/tree/2.1.22) (2023-06-22)
 
 
