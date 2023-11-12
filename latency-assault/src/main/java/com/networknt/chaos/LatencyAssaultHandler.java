@@ -56,7 +56,7 @@ public class LatencyAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void register() {
-        ModuleRegistry.registerModule(LatencyAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(LatencyAssaultConfig.CONFIG_NAME), null);
+        ModuleRegistry.registerModule(LatencyAssaultConfig.CONFIG_NAME, LatencyAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(LatencyAssaultConfig.CONFIG_NAME), null);
     }
 
     private int determineLatency() {

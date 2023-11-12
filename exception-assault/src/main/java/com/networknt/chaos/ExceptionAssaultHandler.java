@@ -51,7 +51,7 @@ public class ExceptionAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void register() {
-        ModuleRegistry.registerModule(ExceptionAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(ExceptionAssaultConfig.CONFIG_NAME), null);
+        ModuleRegistry.registerModule(ExceptionAssaultConfig.CONFIG_NAME, ExceptionAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(ExceptionAssaultConfig.CONFIG_NAME), null);
     }
 
     @Override
