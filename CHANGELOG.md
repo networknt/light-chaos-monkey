@@ -7,6 +7,8 @@
 
 
 - fixes \#26 refactor module registry to add config name [\#27](https://github.com/networknt/light-chaos-monkey/pull/27) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.28](https://github.com/networknt/light-chaos-monkey/tree/2.1.28) (2023-10-24)
 
 
