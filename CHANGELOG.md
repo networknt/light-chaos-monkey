@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.1.29](https://github.com/networknt/light-chaos-monkey/tree/2.1.29) (2023-11-19)
+
+
+**Merged pull requests:**
+
+
+- fixes \#26 refactor module registry to add config name [\#27](https://github.com/networknt/light-chaos-monkey/pull/27) ([stevehu](https://github.com/stevehu))
 ## [2.1.28](https://github.com/networknt/light-chaos-monkey/tree/2.1.28) (2023-10-24)
 
 
