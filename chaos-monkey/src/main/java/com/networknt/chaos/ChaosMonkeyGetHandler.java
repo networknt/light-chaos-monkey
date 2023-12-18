@@ -32,7 +32,6 @@ public class ChaosMonkeyGetHandler implements LightHttpHandler {
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
         if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyGetHandler.handleRequest starts.");
         Map<String, Object> configMap = new HashMap<>();
-        Map<String, Object> registry = ModuleRegistry.getRegistry();
         configMap.put(ExceptionAssaultHandler.class.getName(), ExceptionAssaultHandler.config);
         configMap.put(KillappAssaultHandler.class.getName(), KillappAssaultHandler.config);
         configMap.put(LatencyAssaultHandler.class.getName(), LatencyAssaultHandler.config);
