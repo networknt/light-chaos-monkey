@@ -7,6 +7,8 @@
 
 
 - fixes \#28 remove unused variable registry in ChaosMonkeyGetHandler [\#29](https://github.com/networknt/light-chaos-monkey/pull/29) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.30](https://github.com/networknt/light-chaos-monkey/tree/2.1.30) (2023-11-21)
 
 
