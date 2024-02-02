@@ -57,7 +57,7 @@ public class MemoryAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void register() {
-        ModuleRegistry.registerModule(MemoryAssaultConfig.CONFIG_NAME, MemoryAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(MemoryAssaultConfig.CONFIG_NAME), null);
+        ModuleRegistry.registerModule(MemoryAssaultConfig.CONFIG_NAME, MemoryAssaultHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(MemoryAssaultConfig.CONFIG_NAME), null);
     }
 
     @Override
