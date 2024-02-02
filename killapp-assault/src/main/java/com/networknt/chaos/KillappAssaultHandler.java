@@ -57,7 +57,7 @@ public class KillappAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void register() {
-        ModuleRegistry.registerModule(KillappAssaultConfig.CONFIG_NAME, KillappAssaultHandler.class.getName(), Config.getInstance().getJsonMapConfigNoCache(KillappAssaultConfig.CONFIG_NAME), null);
+        ModuleRegistry.registerModule(KillappAssaultConfig.CONFIG_NAME, KillappAssaultHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(KillappAssaultConfig.CONFIG_NAME), null);
     }
 
     @Override
