@@ -109,7 +109,7 @@
         <version.build-helper-maven>3.3.0</version.build-helper-maven>
         <version.jacoco-maven>0.8.8</version.jacoco-maven>
         <version.maven-deploy>3.0.0</version.maven-deploy>
-        <version.maven-compiler>3.10.1</version.maven-compiler>    
+        <version.maven-compiler>3.10.1</version.maven-compiler>
     </properties>
 
 

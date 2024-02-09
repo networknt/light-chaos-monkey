@@ -6,6 +6,3 @@ enabled: ${killapp-assault.enabled:false}
 bypass: ${killapp-assault.bypass:true}
 # How many requests are to be attacked. 1 each request, 5 each 5th request is attacked
 level: ${killapp-assault.level:10}
-
-
-
