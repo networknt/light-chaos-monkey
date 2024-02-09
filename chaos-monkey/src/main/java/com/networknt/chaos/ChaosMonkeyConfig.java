@@ -10,4 +10,3 @@ public class ChaosMonkeyConfig {
         this.enabled = enabled;
     }
 }
-

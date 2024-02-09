@@ -11,23 +11,23 @@ While helping my customers to build large scale distributed systems in light-4j,
 * What will happen if one of the service instances is down?
 * How does the service discovery help during service deployment?
 
-As you can see, there are a lot of questions to be answered to make our customers comfortable to rollout distributed applications. 
+As you can see, there are a lot of questions to be answered to make our customers comfortable to rollout distributed applications.
 
 These questions led me to dive into [Chaos Engineering](https://principlesofchaos.org/) and started this project to share my thoughts and experience.
 
 ### How does it work?
 
-As we know, the light-4j framework is using middleware handlers to address cross-cutting concerns in the request/response chain in the same service instance or at the network level with [light-router](https://github.com/networknt/light-router), [light-proxy](https://github.com/networknt/light-proxy) or [light-mesh/http-sidecar](https://github.com/networknt/light-mesh). 
+As we know, the light-4j framework is using middleware handlers to address cross-cutting concerns in the request/response chain in the same service instance or at the network level with [light-router](https://github.com/networknt/light-router), [light-proxy](https://github.com/networknt/light-proxy) or [light-mesh/http-sidecar](https://github.com/networknt/light-mesh).
 
-To simulate some of the Chaos Monkey behaviours, we built several middleware handlers that can be injected into the request/response chain. These middleware handlers simulate network latency, out of memory, runtime exception and application shutdown etc. 
+To simulate some of the Chaos Monkey behaviours, we built several middleware handlers that can be injected into the request/response chain. These middleware handlers simulate network latency, out of memory, runtime exception and application shutdown etc.
 
-For more information, please visit the [document](https://doc.networknt.com/style/light-chaos-monkey/) and [tutorial](https://doc.networknt.com/tutorial/chaos-monkey/). 
+For more information, please visit the [document](https://doc.networknt.com/style/light-chaos-monkey/) and [tutorial](https://doc.networknt.com/tutorial/chaos-monkey/).
 
 ### Dynamic Configuration at runtime
 
-Each middleware handler has its configuration file with a switch to enable or disable. So you can even deploy it to the production without any negative impact. 
+Each middleware handler has its configuration file with a switch to enable or disable. So you can even deploy it to the production without any negative impact.
 
-A configuration endpoint /chaosmonkey enables these handlers at runtime with different parameters. It allows controlled Chaos Engineering from the pipeline so that it can be rerun for every release. Also, this gives the team more opportunities to simulate random production behaviours. 
+A configuration endpoint /chaosmonkey enables these handlers at runtime with different parameters. It allows controlled Chaos Engineering from the pipeline so that it can be rerun for every release. Also, this gives the team more opportunities to simulate random production behaviours.
 
 ### Assault Handlers
 
@@ -48,4 +48,3 @@ When the configured methods are called in the application, the Chaos Monkey will
 * Memory Assault
 
 Memory Assaults attack the memory of the Java Virtual Machine.
-
