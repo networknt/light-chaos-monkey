@@ -9,6 +9,8 @@
 - [pre-commit.ci] pre-commit autoupdate [\#34](https://github.com/networknt/light-chaos-monkey/pull/34) ([pre-commit-ci](https://github.com/apps/pre-commit-ci))
 - fixes \#32 add pre-commit hook and apply it [\#33](https://github.com/networknt/light-chaos-monkey/pull/33) ([stevehu](https://github.com/stevehu))
 - fixes \#30 Use NoneDecryptedInstance to load the config for registerMo… [\#31](https://github.com/networknt/light-chaos-monkey/pull/31) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.31](https://github.com/networknt/light-chaos-monkey/tree/2.1.31) (2024-01-16)
 
 
