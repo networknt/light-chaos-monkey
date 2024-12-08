@@ -25,7 +25,6 @@ public class ChaosMonkeyGetHandler implements LightHttpHandler {
     public ChaosMonkeyGetHandler() {
         logger.info("ChaosMonkeyGetHandler constructed");
         config = (ChaosMonkeyConfig) Config.getInstance().getJsonObjectConfig(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyConfig.class);
-        ModuleRegistry.registerModule(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyGetHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(ChaosMonkeyConfig.CONFIG_NAME), null);
     }
 
     @Override
