@@ -5,11 +5,14 @@ import com.networknt.config.Config;
 import com.networknt.config.JsonMapper;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.httpstring.AttachmentConstants;
+import com.networknt.utility.ModuleRegistry;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,12 +21,14 @@ import java.util.Map;
  * @author Steve Hu
  */
 public class ChaosMonkeyPostHandler implements LightHttpHandler {
-    public static ChaosMonkeyConfig config = (ChaosMonkeyConfig) Config.getInstance().getJsonObjectConfig(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyConfig.class);
     private static final Logger logger = LoggerFactory.getLogger(ChaosMonkeyPostHandler.class);
+    private static ChaosMonkeyConfig config;
     private static final String HANDLER_IS_DISABLED = "ERR10065";
 
     public ChaosMonkeyPostHandler() {
         logger.info("ChaosMonkeyPostHandler constructed");
+        config = ChaosMonkeyConfig.load();
+        ModuleRegistry.registerModule(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyPostHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(ChaosMonkeyConfig.CONFIG_NAME), null);
     }
 
     @Override
@@ -57,5 +62,11 @@ public class ChaosMonkeyPostHandler implements LightHttpHandler {
             if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyPostHandler.handleRequest ends with an error.");
             setExchangeStatus(exchange, HANDLER_IS_DISABLED, "Chaos Monkey");
         }
+    }
+
+    public static void reload() {
+        config.reload();
+        ModuleRegistry.registerModule(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyPostHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(ChaosMonkeyConfig.CONFIG_NAME), null);
+        if(logger.isInfoEnabled()) logger.info("ChaosMonkeyPostHandler reloaded.");
     }
 }
