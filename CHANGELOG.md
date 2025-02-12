@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.2.0](https://github.com/networknt/light-chaos-monkey/tree/2.2.0) (2025-02-11)
+
+
+**Merged pull requests:**
+
+
+- fixes \#36 Add reload support for chaos monkey handler [\#38](https://github.com/networknt/light-chaos-monkey/pull/38) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.1.37](https://github.com/networknt/light-chaos-monkey/tree/2.1.37) (2024-09-20)
 
 
