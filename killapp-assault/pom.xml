@@ -9,8 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.networknt</groupId>
     <artifactId>killapp-assault</artifactId>
+    <packaging>jar</packaging>
+    <name>killapp-assault</name>
+    <description>Assault that kills the application to test microservices resilience</description>
 
     <dependencies>
         <dependency>

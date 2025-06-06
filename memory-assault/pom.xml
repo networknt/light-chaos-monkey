@@ -9,8 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.networknt</groupId>
     <artifactId>memory-assault</artifactId>
+    <packaging>jar</packaging>
+    <name>memory-assault</name>
+    <description>Assault that consumes memory to test microservices resilience</description>
 
     <dependencies>
         <dependency>
