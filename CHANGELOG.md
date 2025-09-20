@@ -7,6 +7,8 @@
 
 
 - [pre-commit.ci] pre-commit autoupdate [\#41](https://github.com/networknt/light-chaos-monkey/pull/41) ([pre-commit-ci](https://github.com/apps/pre-commit-ci))
+
+
 ## [2.3.0](https://github.com/networknt/light-chaos-monkey/tree/2.3.0) (2025-06-25)
 
 
