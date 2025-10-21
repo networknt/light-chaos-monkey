@@ -1,0 +1,37 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "required" : [ "enabled", "bypass", "level", "memoryMillisecondsHoldFilledMemory", "memoryMillisecondsWaitNextIncrease", "memoryFillIncrementFraction", "memoryFillTargetFraction" ],
+  "properties" : {
+    "enabled" : {
+      "type" : "boolean",
+      "description" : "Enable the handler if set to true so that it will be wired in the handler chain during the startup."
+    },
+    "bypass" : {
+      "type" : "boolean",
+      "description" : "Bypass the current chaos monkey middleware handler so that attacks won't be triggered."
+    },
+    "level" : {
+      "type" : "integer",
+      "description" : "How many requests are to be attacked. 1 each request, 5 each 5th request is attacked."
+    },
+    "memoryMillisecondsHoldFilledMemory" : {
+      "type" : "integer",
+      "description" : "Duration to assault memory when requested fill amount is reached in ms.\nmin=1500, max=Integer.MAX_VALUE"
+    },
+    "memoryMillisecondsWaitNextIncrease" : {
+      "type" : "integer",
+      "description" : "Time in ms between increases of memory usage.\nmin=100,max=30000"
+    },
+    "memoryFillIncrementFraction" : {
+      "type" : "number",
+      "description" : "Fraction of one individual memory increase iteration. 1.0 equals 100 %.\nmin=0.01, max = 1.0",
+      "format" : "float32"
+    },
+    "memoryFillTargetFraction" : {
+      "type" : "number",
+      "description" : "Final fraction of used memory by assault. 0.95 equals 95 %.\nmin=0.01, max = 0.95",
+      "format" : "float32"
+    }
+  }
+}

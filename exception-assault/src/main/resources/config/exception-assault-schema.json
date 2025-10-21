@@ -1,0 +1,19 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "required" : [ "enabled", "bypass", "level" ],
+  "properties" : {
+    "enabled" : {
+      "type" : "boolean",
+      "description" : "Enable the handler if set to true so that it will be wired in the handler chain during the startup."
+    },
+    "bypass" : {
+      "type" : "boolean",
+      "description" : "Bypass the current chaos monkey middleware handler so that attacks won't be triggered."
+    },
+    "level" : {
+      "type" : "integer",
+      "description" : "How many requests are to be attacked. 1 each request, 5 each 5th request is attacked."
+    }
+  }
+}

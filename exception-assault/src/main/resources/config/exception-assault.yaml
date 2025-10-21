@@ -1,0 +1,7 @@
+# Light Chaos Monkey Exception Assault Handler Configuration.
+# Enable the handler if set to true so that it will be wired in the handler chain during the startup.
+enabled: ${exception-assault.enabled:false}
+# Bypass the current chaos monkey middleware handler so that attacks won't be triggered.
+bypass: ${exception-assault.bypass:true}
+# How many requests are to be attacked. 1 each request, 5 each 5th request is attacked.
+level: ${exception-assault.level:10}
