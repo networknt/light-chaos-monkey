@@ -44,7 +44,6 @@ public class ChaosMonkeyConfig {
             configFieldName = ENABLED,
             externalizedKeyName = ENABLED,
             description = "Enable the handlers if set to true to allow user to get or post configurations for the assault handlers.",
-            externalized = true,
             defaultValue = "false"
     )
     boolean enabled;

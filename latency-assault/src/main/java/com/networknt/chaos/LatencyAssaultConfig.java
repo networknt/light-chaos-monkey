@@ -34,7 +34,6 @@ public class LatencyAssaultConfig {
             configFieldName = ENABLED,
             externalizedKeyName = ENABLED,
             description = "Enable the handler if set to true so that it will be wired in the handler chain during the startup.",
-            externalized = true,
             defaultValue = "false" // Matches the default in config file
     )
     boolean enabled;
@@ -43,7 +42,6 @@ public class LatencyAssaultConfig {
             configFieldName = BYPASS,
             externalizedKeyName = BYPASS,
             description = "Bypass the current chaos monkey middleware handler so that attacks won't be triggered.",
-            externalized = true,
             defaultValue = "true" // Matches the default in config file
     )
     boolean bypass;
@@ -52,7 +50,6 @@ public class LatencyAssaultConfig {
             configFieldName = LEVEL,
             externalizedKeyName = LEVEL,
             description = "How many requests are to be attacked. 1 each request, 5 each 5th request is attacked.",
-            externalized = true,
             defaultValue = "10" // Matches the default in config file
     )
     int level;
@@ -61,7 +58,6 @@ public class LatencyAssaultConfig {
             configFieldName = LATENCY_RANGE_START,
             externalizedKeyName = LATENCY_RANGE_START,
             description = "Dynamic Latency range start in milliseconds. When start and end are equal, then fixed latency.",
-            externalized = true,
             defaultValue = "1000" // Matches the default in config file
     )
     int latencyRangeStart;
@@ -70,7 +66,6 @@ public class LatencyAssaultConfig {
             configFieldName = LATENCY_RANGE_END,
             externalizedKeyName = LATENCY_RANGE_END,
             description = "Dynamic latency range end in milliseconds.",
-            externalized = true,
             defaultValue = "3000" // Matches the default in config file
     )
     int latencyRangeEnd;

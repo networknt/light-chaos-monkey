@@ -31,7 +31,6 @@ public class ExceptionAssaultConfig {
             configFieldName = ENABLED,
             externalizedKeyName = ENABLED,
             description = "Enable the handler if set to true so that it will be wired in the handler chain during the startup.",
-            externalized = true,
             defaultValue = "false"
     )
     boolean enabled;
@@ -40,7 +39,6 @@ public class ExceptionAssaultConfig {
             configFieldName = BYPASS,
             externalizedKeyName = BYPASS,
             description = "Bypass the current chaos monkey middleware handler so that attacks won't be triggered.",
-            externalized = true,
             defaultValue = "true"
     )
     boolean bypass;
@@ -49,7 +47,6 @@ public class ExceptionAssaultConfig {
             configFieldName = LEVEL,
             externalizedKeyName = LEVEL,
             description = "How many requests are to be attacked. 1 each request, 5 each 5th request is attacked.",
-            externalized = true,
             defaultValue = "10"
     )
     int level;

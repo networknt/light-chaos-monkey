@@ -37,7 +37,6 @@ public class MemoryAssaultConfig {
             configFieldName = ENABLED,
             externalizedKeyName = ENABLED,
             description = "Enable the handler if set to true so that it will be wired in the handler chain during the startup.",
-            externalized = true,
             defaultValue = "false"
     )
     boolean enabled;
@@ -46,7 +45,6 @@ public class MemoryAssaultConfig {
             configFieldName = BYPASS,
             externalizedKeyName = BYPASS,
             description = "Bypass the current chaos monkey middleware handler so that attacks won't be triggered.",
-            externalized = true,
             defaultValue = "true"
     )
     boolean bypass;
@@ -55,7 +53,6 @@ public class MemoryAssaultConfig {
             configFieldName = LEVEL,
             externalizedKeyName = LEVEL,
             description = "How many requests are to be attacked. 1 each request, 5 each 5th request is attacked.",
-            externalized = true,
             defaultValue = "10"
     )
     int level;
@@ -64,7 +61,6 @@ public class MemoryAssaultConfig {
             configFieldName = MEMORY_HOLD_MS,
             externalizedKeyName = MEMORY_HOLD_MS,
             description = "Duration to assault memory when requested fill amount is reached in ms.\nmin=1500, max=Integer.MAX_VALUE",
-            externalized = true,
             defaultValue = "90000"
     )
     int memoryMillisecondsHoldFilledMemory;
@@ -73,7 +69,6 @@ public class MemoryAssaultConfig {
             configFieldName = MEMORY_WAIT_MS,
             externalizedKeyName = MEMORY_WAIT_MS,
             description = "Time in ms between increases of memory usage.\nmin=100,max=30000",
-            externalized = true,
             defaultValue = "1000"
     )
     int memoryMillisecondsWaitNextIncrease;
@@ -82,7 +77,6 @@ public class MemoryAssaultConfig {
             configFieldName = MEMORY_FILL_INCREMENT_FRACTION,
             externalizedKeyName = MEMORY_FILL_INCREMENT_FRACTION,
             description = "Fraction of one individual memory increase iteration. 1.0 equals 100 %.\nmin=0.01, max = 1.0",
-            externalized = true,
             defaultValue = "0.15"
     )
     float memoryFillIncrementFraction; // Java type is float
@@ -91,7 +85,6 @@ public class MemoryAssaultConfig {
             configFieldName = MEMORY_FILL_TARGET_FRACTION,
             externalizedKeyName = MEMORY_FILL_TARGET_FRACTION,
             description = "Final fraction of used memory by assault. 0.95 equals 95 %.\nmin=0.01, max = 0.95",
-            externalized = true,
             defaultValue = "0.25"
     )
     float memoryFillTargetFraction; // Java type is float
