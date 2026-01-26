@@ -51,16 +51,6 @@ public class ExceptionAssaultHandler implements MiddlewareHandler {
         return config.isEnabled();
     }
 
-    @Override
-    public void register() {
-    }
-
-    @Override
-    public void reload() {
-        ExceptionAssaultConfig.reload();
-        config = ExceptionAssaultConfig.load();
-    }
-
     private boolean isTrouble() {
         return getTroubleRandom() >= config.getLevel();
     }

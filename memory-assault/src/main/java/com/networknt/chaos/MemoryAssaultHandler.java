@@ -57,16 +57,6 @@ public class MemoryAssaultHandler implements MiddlewareHandler {
         return config.isEnabled();
     }
 
-    @Override
-    public void register() {
-    }
-
-    @Override
-    public void reload() {
-        MemoryAssaultConfig.reload();
-        config = MemoryAssaultConfig.load();
-    }
-
     private void eatFreeMemory() {
         @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         Vector<byte[]> memoryVector = new Vector<>();

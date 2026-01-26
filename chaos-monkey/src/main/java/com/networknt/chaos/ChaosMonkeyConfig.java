@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import com.networknt.server.ModuleRegistry;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 // <<< REQUIRED ANNOTATION FOR SCHEMA GENERATION >>>
 @ConfigSchema(
@@ -50,17 +49,15 @@ public class ChaosMonkeyConfig {
     )
     boolean enabled;
 
-    private final Config config;
-    private Map<String, Object> mappedConfig;
-    private static final Map<String, ChaosMonkeyConfig> instances = new ConcurrentHashMap<>();
+    private final Map<String, Object> mappedConfig;
+    private static ChaosMonkeyConfig instance;
 
     public ChaosMonkeyConfig() {
         this(CONFIG_NAME);
     }
     
     private ChaosMonkeyConfig(String configName) {
-        config = Config.getInstance();
-        mappedConfig = config.getJsonMapConfigNoCache(configName);
+        mappedConfig = Config.getInstance().getJsonMapConfig(configName);
         setConfigData();
     }
 
@@ -69,41 +66,33 @@ public class ChaosMonkeyConfig {
     }
 
     public static ChaosMonkeyConfig load(String configName) {
-        ChaosMonkeyConfig instance = instances.get(configName);
-        if (instance != null) {
-            return instance;
-        }
-        synchronized (ChaosMonkeyConfig.class) {
-            instance = instances.get(configName);
-            if (instance != null) {
+        if (CONFIG_NAME.equals(configName)) {
+            Map<String, Object> mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+            if (instance != null && instance.getMappedConfig() == mappedConfig) {
                 return instance;
             }
-            instance = new ChaosMonkeyConfig(configName);
-            instances.put(configName, instance);
-            if (CONFIG_NAME.equals(configName)) {
+            synchronized (ChaosMonkeyConfig.class) {
+                mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+                if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                    return instance;
+                }
+                instance = new ChaosMonkeyConfig(configName);
                 ModuleRegistry.registerModule(CONFIG_NAME, ChaosMonkeyConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
-            }
-            return instance;
-        }
-    }
-
-    public static void reload() {
-        reload(CONFIG_NAME);
-    }
-
-    public static void reload(String configName) {
-        synchronized (ChaosMonkeyConfig.class) {
-            ChaosMonkeyConfig instance = new ChaosMonkeyConfig(configName);
-            instances.put(configName, instance);
-            if (CONFIG_NAME.equals(configName)) {
-                ModuleRegistry.registerModule(CONFIG_NAME, ChaosMonkeyConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+                return instance;
             }
         }
+        return new ChaosMonkeyConfig(configName);
     }
+
+
 
     private void setConfigData() {
         Object object = mappedConfig.get(ENABLED);
         if(object != null) enabled = Config.loadBooleanValue(ENABLED, object);
+    }
+
+    public Map<String, Object> getMappedConfig() {
+        return mappedConfig;
     }
 
     public boolean isEnabled() {

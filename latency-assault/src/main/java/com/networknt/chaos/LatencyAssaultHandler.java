@@ -56,10 +56,6 @@ public class LatencyAssaultHandler implements MiddlewareHandler {
         return config.isEnabled();
     }
 
-    @Override
-    public void register() {
-    }
-
     private int determineLatency() {
         int latencyRangeStart = config.getLatencyRangeStart();
         int latencyRangeEnd = config.getLatencyRangeEnd();
@@ -70,13 +66,6 @@ public class LatencyAssaultHandler implements MiddlewareHandler {
             return ThreadLocalRandom.current().nextInt(latencyRangeStart, latencyRangeEnd);
         }
     }
-
-    @Override
-    public void reload() {
-        LatencyAssaultConfig.reload();
-        config = LatencyAssaultConfig.load();
-    }
-
 
     private boolean isTrouble() {
         return getTroubleRandom() >= config.getLevel();

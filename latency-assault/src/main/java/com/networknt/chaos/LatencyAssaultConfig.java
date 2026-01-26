@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import com.networknt.server.ModuleRegistry;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 // <<< REQUIRED ANNOTATION FOR SCHEMA GENERATION >>>
 @ConfigSchema(
@@ -29,9 +28,8 @@ public class LatencyAssaultConfig {
     public final static String LATENCY_RANGE_START = "latencyRangeStart";
     public final static String LATENCY_RANGE_END = "latencyRangeEnd";
 
-    private Map<String, Object> mappedConfig;
-    private final Config config;
-    private static final Map<String, LatencyAssaultConfig> instances = new ConcurrentHashMap<>();
+    private final Map<String, Object> mappedConfig;
+    private static LatencyAssaultConfig instance;
 
     @BooleanField(
             configFieldName = ENABLED,
@@ -80,8 +78,7 @@ public class LatencyAssaultConfig {
     }
 
     private LatencyAssaultConfig(String configName) {
-        config = Config.getInstance();
-        mappedConfig = config.getJsonMapConfigNoCache(configName);
+        mappedConfig = Config.getInstance().getJsonMapConfig(configName);
         setConfigData();
     }
 
@@ -90,37 +87,25 @@ public class LatencyAssaultConfig {
     }
 
     public static LatencyAssaultConfig load(String configName) {
-        LatencyAssaultConfig instance = instances.get(configName);
-        if (instance != null) {
-            return instance;
-        }
-        synchronized (LatencyAssaultConfig.class) {
-            instance = instances.get(configName);
-            if (instance != null) {
+        if (CONFIG_NAME.equals(configName)) {
+            Map<String, Object> mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+            if (instance != null && instance.getMappedConfig() == mappedConfig) {
                 return instance;
             }
-            instance = new LatencyAssaultConfig(configName);
-            instances.put(configName, instance);
-            if (CONFIG_NAME.equals(configName)) {
+            synchronized (LatencyAssaultConfig.class) {
+                mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+                if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                    return instance;
+                }
+                instance = new LatencyAssaultConfig(configName);
                 ModuleRegistry.registerModule(CONFIG_NAME, LatencyAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
-            }
-            return instance;
-        }
-    }
-
-    public static void reload() {
-        reload(CONFIG_NAME);
-    }
-
-    public static void reload(String configName) {
-        synchronized (LatencyAssaultConfig.class) {
-            LatencyAssaultConfig instance = new LatencyAssaultConfig(configName);
-            instances.put(configName, instance);
-            if (CONFIG_NAME.equals(configName)) {
-                ModuleRegistry.registerModule(CONFIG_NAME, LatencyAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+                return instance;
             }
         }
+        return new LatencyAssaultConfig(configName);
     }
+
+
 
     private void setConfigData() {
         Object object = mappedConfig.get(ENABLED);
@@ -137,6 +122,10 @@ public class LatencyAssaultConfig {
 
         object = mappedConfig.get(LATENCY_RANGE_END);
         if(object != null) latencyRangeEnd = Config.loadIntegerValue(LATENCY_RANGE_END, object);
+    }
+
+    public Map<String, Object> getMappedConfig() {
+        return mappedConfig;
     }
 
     // --- Getters and Setters (Original Methods) ---

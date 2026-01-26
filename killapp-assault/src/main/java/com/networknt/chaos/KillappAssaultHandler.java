@@ -57,16 +57,6 @@ public class KillappAssaultHandler implements MiddlewareHandler {
         return config.isEnabled();
     }
 
-    @Override
-    public void register() {
-    }
-
-    @Override
-    public void reload() {
-        KillappAssaultConfig.reload();
-        config = KillappAssaultConfig.load();
-    }
-
     private boolean isTrouble() {
         return getTroubleRandom() >= config.getLevel();
     }

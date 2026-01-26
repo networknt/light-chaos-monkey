@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import com.networknt.server.ModuleRegistry;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @ConfigSchema(
         configKey = "exception-assault",
@@ -26,9 +25,8 @@ public class ExceptionAssaultConfig {
     public final static String BYPASS = "bypass";
     public final static String LEVEL = "level";
 
-    private Map<String, Object> mappedConfig; // To hold the raw config data
-    private final Config config;
-    private static final Map<String, ExceptionAssaultConfig> instances = new ConcurrentHashMap<>();
+    private final Map<String, Object> mappedConfig;
+    private static ExceptionAssaultConfig instance;
 
     @BooleanField(
             configFieldName = ENABLED,
@@ -61,8 +59,7 @@ public class ExceptionAssaultConfig {
     }
 
     private ExceptionAssaultConfig(String configName) {
-        config = Config.getInstance();
-        mappedConfig = config.getJsonMapConfigNoCache(configName);
+        mappedConfig = Config.getInstance().getJsonMapConfig(configName);
         setConfigData();
     }
 
@@ -71,37 +68,25 @@ public class ExceptionAssaultConfig {
     }
 
     public static ExceptionAssaultConfig load(String configName) {
-        ExceptionAssaultConfig instance = instances.get(configName);
-        if (instance != null) {
-            return instance;
-        }
-        synchronized (ExceptionAssaultConfig.class) {
-            instance = instances.get(configName);
-            if (instance != null) {
+        if (CONFIG_NAME.equals(configName)) {
+            Map<String, Object> mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+            if (instance != null && instance.getMappedConfig() == mappedConfig) {
                 return instance;
             }
-            instance = new ExceptionAssaultConfig(configName);
-            instances.put(configName, instance);
-            if (CONFIG_NAME.equals(configName)) {
+            synchronized (ExceptionAssaultConfig.class) {
+                mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+                if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                    return instance;
+                }
+                instance = new ExceptionAssaultConfig(configName);
                 ModuleRegistry.registerModule(CONFIG_NAME, ExceptionAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
-            }
-            return instance;
-        }
-    }
-
-    public static void reload() {
-        reload(CONFIG_NAME);
-    }
-
-    public static void reload(String configName) {
-        synchronized (ExceptionAssaultConfig.class) {
-            ExceptionAssaultConfig instance = new ExceptionAssaultConfig(configName);
-            instances.put(configName, instance);
-            if (CONFIG_NAME.equals(configName)) {
-                ModuleRegistry.registerModule(CONFIG_NAME, ExceptionAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+                return instance;
             }
         }
+        return new ExceptionAssaultConfig(configName);
     }
+
+
 
 
     private void setConfigData() {
@@ -113,6 +98,10 @@ public class ExceptionAssaultConfig {
 
         object = mappedConfig.get(LEVEL);
         if(object != null) level = Config.loadIntegerValue(LEVEL, object);
+    }
+
+    public Map<String, Object> getMappedConfig() {
+        return mappedConfig;
     }
 
     // --- Getters and Setters (Original Methods) ---
