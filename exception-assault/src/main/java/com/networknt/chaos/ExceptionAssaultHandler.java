@@ -3,7 +3,8 @@ package com.networknt.chaos;
 import com.networknt.config.Config;
 import com.networknt.handler.Handler;
 import com.networknt.handler.MiddlewareHandler;
-import com.networknt.utility.ModuleRegistry;
+import com.networknt.handler.Handler;
+import com.networknt.handler.MiddlewareHandler;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -13,11 +14,12 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ExceptionAssaultHandler implements MiddlewareHandler {
-    public static ExceptionAssaultConfig config = (ExceptionAssaultConfig) Config.getInstance().getJsonObjectConfig(ExceptionAssaultConfig.CONFIG_NAME, ExceptionAssaultConfig.class);
+    public static ExceptionAssaultConfig config;
     private static final Logger logger = LoggerFactory.getLogger(ExceptionAssaultHandler.class);
     private volatile HttpHandler next;
 
     public ExceptionAssaultHandler() {
+        config = ExceptionAssaultConfig.load();
         logger.info("ExceptionAssaultHandler constructed");
     }
 
@@ -51,12 +53,12 @@ public class ExceptionAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void register() {
-        ModuleRegistry.registerModule(ExceptionAssaultConfig.CONFIG_NAME, ExceptionAssaultHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(ExceptionAssaultConfig.CONFIG_NAME), null);
     }
 
     @Override
     public void reload() {
-        config = (ExceptionAssaultConfig) Config.getInstance().getJsonObjectConfig(ExceptionAssaultConfig.CONFIG_NAME, ExceptionAssaultConfig.class);
+        ExceptionAssaultConfig.reload();
+        config = ExceptionAssaultConfig.load();
     }
 
     private boolean isTrouble() {

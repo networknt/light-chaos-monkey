@@ -8,7 +8,9 @@ import com.networknt.config.schema.IntegerField; // REQUIRED IMPORT
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.networknt.server.ModuleRegistry;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 // <<< REQUIRED ANNOTATION FOR SCHEMA GENERATION >>>
 @ConfigSchema(
@@ -29,6 +31,7 @@ public class LatencyAssaultConfig {
 
     private Map<String, Object> mappedConfig;
     private final Config config;
+    private static final Map<String, LatencyAssaultConfig> instances = new ConcurrentHashMap<>();
 
     @BooleanField(
             configFieldName = ENABLED,
@@ -72,7 +75,7 @@ public class LatencyAssaultConfig {
 
     // --- Constructor and Loading Logic ---
 
-    private LatencyAssaultConfig() {
+    public LatencyAssaultConfig() {
         this(CONFIG_NAME);
     }
 
@@ -83,17 +86,40 @@ public class LatencyAssaultConfig {
     }
 
     public static LatencyAssaultConfig load() {
-        return new LatencyAssaultConfig();
+        return load(CONFIG_NAME);
     }
 
     public static LatencyAssaultConfig load(String configName) {
-        return new LatencyAssaultConfig(configName);
+        LatencyAssaultConfig instance = instances.get(configName);
+        if (instance != null) {
+            return instance;
+        }
+        synchronized (LatencyAssaultConfig.class) {
+            instance = instances.get(configName);
+            if (instance != null) {
+                return instance;
+            }
+            instance = new LatencyAssaultConfig(configName);
+            instances.put(configName, instance);
+            if (CONFIG_NAME.equals(configName)) {
+                ModuleRegistry.registerModule(CONFIG_NAME, LatencyAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+            }
+            return instance;
+        }
     }
 
-    public void reload() {
-        mappedConfig.clear();
-        mappedConfig.putAll(config.getJsonMapConfigNoCache(CONFIG_NAME));
-        setConfigData();
+    public static void reload() {
+        reload(CONFIG_NAME);
+    }
+
+    public static void reload(String configName) {
+        synchronized (LatencyAssaultConfig.class) {
+            LatencyAssaultConfig instance = new LatencyAssaultConfig(configName);
+            instances.put(configName, instance);
+            if (CONFIG_NAME.equals(configName)) {
+                ModuleRegistry.registerModule(CONFIG_NAME, LatencyAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+            }
+        }
     }
 
     private void setConfigData() {

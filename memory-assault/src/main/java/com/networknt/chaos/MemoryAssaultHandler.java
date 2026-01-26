@@ -3,7 +3,8 @@ package com.networknt.chaos;
 import com.networknt.config.Config;
 import com.networknt.handler.Handler;
 import com.networknt.handler.MiddlewareHandler;
-import com.networknt.utility.ModuleRegistry;
+import com.networknt.handler.Handler;
+import com.networknt.handler.MiddlewareHandler;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class MemoryAssaultHandler implements MiddlewareHandler {
-    public static MemoryAssaultConfig config = (MemoryAssaultConfig) Config.getInstance().getJsonObjectConfig(MemoryAssaultConfig.CONFIG_NAME, MemoryAssaultConfig.class);
+    public static MemoryAssaultConfig config;
     private static final Logger logger = LoggerFactory.getLogger(MemoryAssaultHandler.class);
     private static final AtomicLong stolenMemory = new AtomicLong(0);
 
@@ -24,6 +25,7 @@ public class MemoryAssaultHandler implements MiddlewareHandler {
     private Runtime runtime = Runtime.getRuntime();
 
     public MemoryAssaultHandler() {
+        config = MemoryAssaultConfig.load();
         logger.info("MemoryAssaultHandler constructed");
     }
 
@@ -57,12 +59,12 @@ public class MemoryAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void register() {
-        ModuleRegistry.registerModule(MemoryAssaultConfig.CONFIG_NAME, MemoryAssaultHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(MemoryAssaultConfig.CONFIG_NAME), null);
     }
 
     @Override
     public void reload() {
-        config = (MemoryAssaultConfig) Config.getInstance().getJsonObjectConfig(MemoryAssaultConfig.CONFIG_NAME, MemoryAssaultConfig.class);
+        MemoryAssaultConfig.reload();
+        config = MemoryAssaultConfig.load();
     }
 
     private void eatFreeMemory() {

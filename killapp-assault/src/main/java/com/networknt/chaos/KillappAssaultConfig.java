@@ -8,7 +8,9 @@ import com.networknt.config.schema.IntegerField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.networknt.server.ModuleRegistry;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ConfigSchema(
         configKey = "killapp-assault",
@@ -26,6 +28,7 @@ public class KillappAssaultConfig {
 
     private Map<String, Object> mappedConfig;
     private final Config config;
+    private static final Map<String, KillappAssaultConfig> instances = new ConcurrentHashMap<>();
 
     @BooleanField(
             configFieldName = ENABLED,
@@ -53,7 +56,7 @@ public class KillappAssaultConfig {
 
     // --- Constructor and Loading Logic ---
 
-    private KillappAssaultConfig() {
+    public KillappAssaultConfig() {
         this(CONFIG_NAME);
     }
 
@@ -64,18 +67,42 @@ public class KillappAssaultConfig {
     }
 
     public static KillappAssaultConfig load() {
-        return new KillappAssaultConfig();
+        return load(CONFIG_NAME);
     }
 
     public static KillappAssaultConfig load(String configName) {
-        return new KillappAssaultConfig(configName);
+        KillappAssaultConfig instance = instances.get(configName);
+        if (instance != null) {
+            return instance;
+        }
+        synchronized (KillappAssaultConfig.class) {
+            instance = instances.get(configName);
+            if (instance != null) {
+                return instance;
+            }
+            instance = new KillappAssaultConfig(configName);
+            instances.put(configName, instance);
+            if (CONFIG_NAME.equals(configName)) {
+                ModuleRegistry.registerModule(CONFIG_NAME, KillappAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+            }
+            return instance;
+        }
     }
 
-    public void reload() {
-        mappedConfig.clear();
-        mappedConfig.putAll(config.getJsonMapConfigNoCache(CONFIG_NAME));
-        setConfigData();
+    public static void reload() {
+        reload(CONFIG_NAME);
     }
+
+    public static void reload(String configName) {
+        synchronized (KillappAssaultConfig.class) {
+            KillappAssaultConfig instance = new KillappAssaultConfig(configName);
+            instances.put(configName, instance);
+            if (CONFIG_NAME.equals(configName)) {
+                ModuleRegistry.registerModule(CONFIG_NAME, KillappAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+            }
+        }
+    }
+
 
     private void setConfigData() {
         Object object = mappedConfig.get(ENABLED);

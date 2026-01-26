@@ -9,7 +9,9 @@ import com.networknt.config.schema.NumberField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.networknt.server.ModuleRegistry;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 // <<< REQUIRED ANNOTATION FOR SCHEMA GENERATION >>>
 @ConfigSchema(
@@ -32,6 +34,7 @@ public class MemoryAssaultConfig {
 
     private Map<String, Object> mappedConfig;
     private final Config config;
+    private static final Map<String, MemoryAssaultConfig> instances = new ConcurrentHashMap<>();
 
     @BooleanField(
             configFieldName = ENABLED,
@@ -91,7 +94,7 @@ public class MemoryAssaultConfig {
 
     // --- Constructor and Loading Logic ---
 
-    private MemoryAssaultConfig() {
+    public MemoryAssaultConfig() {
         this(CONFIG_NAME);
     }
 
@@ -102,18 +105,42 @@ public class MemoryAssaultConfig {
     }
 
     public static MemoryAssaultConfig load() {
-        return new MemoryAssaultConfig();
+        return load(CONFIG_NAME);
     }
 
     public static MemoryAssaultConfig load(String configName) {
-        return new MemoryAssaultConfig(configName);
+        MemoryAssaultConfig instance = instances.get(configName);
+        if (instance != null) {
+            return instance;
+        }
+        synchronized (MemoryAssaultConfig.class) {
+            instance = instances.get(configName);
+            if (instance != null) {
+                return instance;
+            }
+            instance = new MemoryAssaultConfig(configName);
+            instances.put(configName, instance);
+            if (CONFIG_NAME.equals(configName)) {
+                ModuleRegistry.registerModule(CONFIG_NAME, MemoryAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+            }
+            return instance;
+        }
     }
 
-    public void reload() {
-        mappedConfig.clear();
-        mappedConfig.putAll(config.getJsonMapConfigNoCache(CONFIG_NAME));
-        setConfigData();
+    public static void reload() {
+        reload(CONFIG_NAME);
     }
+
+    public static void reload(String configName) {
+        synchronized (MemoryAssaultConfig.class) {
+            MemoryAssaultConfig instance = new MemoryAssaultConfig(configName);
+            instances.put(configName, instance);
+            if (CONFIG_NAME.equals(configName)) {
+                ModuleRegistry.registerModule(CONFIG_NAME, MemoryAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+            }
+        }
+    }
+
 
     private void setConfigData() {
         Object object = mappedConfig.get(ENABLED);

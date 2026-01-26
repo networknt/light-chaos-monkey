@@ -3,7 +3,8 @@ package com.networknt.chaos;
 import com.networknt.config.Config;
 import com.networknt.handler.Handler;
 import com.networknt.handler.MiddlewareHandler;
-import com.networknt.utility.ModuleRegistry;
+import com.networknt.handler.Handler;
+import com.networknt.handler.MiddlewareHandler;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -13,11 +14,12 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LatencyAssaultHandler implements MiddlewareHandler {
-    public static LatencyAssaultConfig config = (LatencyAssaultConfig) Config.getInstance().getJsonObjectConfig(LatencyAssaultConfig.CONFIG_NAME, LatencyAssaultConfig.class);
+    public static LatencyAssaultConfig config;
     private static final Logger logger = LoggerFactory.getLogger(LatencyAssaultHandler.class);
     private volatile HttpHandler next;
 
     public LatencyAssaultHandler() {
+        config = LatencyAssaultConfig.load();
         logger.info("LatencyAssaultHandler constructed");
     }
 
@@ -56,7 +58,6 @@ public class LatencyAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void register() {
-        ModuleRegistry.registerModule(LatencyAssaultConfig.CONFIG_NAME, LatencyAssaultHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(LatencyAssaultConfig.CONFIG_NAME), null);
     }
 
     private int determineLatency() {
@@ -72,7 +73,8 @@ public class LatencyAssaultHandler implements MiddlewareHandler {
 
     @Override
     public void reload() {
-        config = (LatencyAssaultConfig) Config.getInstance().getJsonObjectConfig(LatencyAssaultConfig.CONFIG_NAME, LatencyAssaultConfig.class);
+        LatencyAssaultConfig.reload();
+        config = LatencyAssaultConfig.load();
     }
 
 
