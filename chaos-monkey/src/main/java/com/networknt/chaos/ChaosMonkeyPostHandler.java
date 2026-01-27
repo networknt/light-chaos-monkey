@@ -21,19 +21,18 @@ import java.util.Map;
  */
 public class ChaosMonkeyPostHandler implements LightHttpHandler {
     private static final Logger logger = LoggerFactory.getLogger(ChaosMonkeyPostHandler.class);
-    private ChaosMonkeyConfig config;
     private static final String HANDLER_IS_DISABLED = "ERR10065";
 
     public ChaosMonkeyPostHandler() {
         logger.info("ChaosMonkeyPostHandler constructed");
-        config = ChaosMonkeyConfig.load();
+        ChaosMonkeyConfig.load();
     }
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
         if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyPostHandler.handleRequest starts.");
-        ChaosMonkeyConfig chaosMonkeyConfig = ChaosMonkeyConfig.load();
-        if(chaosMonkeyConfig.isEnabled()) {
+        ChaosMonkeyConfig config = ChaosMonkeyConfig.load();
+        if(config.isEnabled()) {
             String assault = null;
             if (exchange.getQueryParameters().get("assault") != null) {
                 assault = exchange.getQueryParameters().get("assault").getFirst();
@@ -78,8 +77,4 @@ public class ChaosMonkeyPostHandler implements LightHttpHandler {
         }
     }
 
-    public static void reload() {
-        ChaosMonkeyConfig.reload();
-        if(logger.isInfoEnabled()) logger.info("ChaosMonkeyPostHandler reloaded.");
-    }
 }
