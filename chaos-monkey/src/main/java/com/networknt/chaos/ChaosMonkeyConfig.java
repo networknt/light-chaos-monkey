@@ -55,7 +55,7 @@ public class ChaosMonkeyConfig {
     public ChaosMonkeyConfig() {
         this(CONFIG_NAME);
     }
-    
+
     private ChaosMonkeyConfig(String configName) {
         mappedConfig = Config.getInstance().getJsonMapConfig(configName);
         setConfigData();
