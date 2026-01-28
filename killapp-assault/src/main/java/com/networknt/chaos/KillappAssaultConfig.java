@@ -8,6 +8,7 @@ import com.networknt.config.schema.IntegerField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.networknt.server.ModuleRegistry;
 import java.util.Map;
 
 @ConfigSchema(
@@ -24,8 +25,8 @@ public class KillappAssaultConfig {
     public final static String BYPASS = "bypass";
     public final static String LEVEL = "level";
 
-    private Map<String, Object> mappedConfig;
-    private final Config config;
+    private final Map<String, Object> mappedConfig;
+    private static volatile KillappAssaultConfig instance;
 
     @BooleanField(
             configFieldName = ENABLED,
@@ -53,29 +54,40 @@ public class KillappAssaultConfig {
 
     // --- Constructor and Loading Logic ---
 
-    private KillappAssaultConfig() {
+    public KillappAssaultConfig() {
         this(CONFIG_NAME);
     }
 
     private KillappAssaultConfig(String configName) {
-        config = Config.getInstance();
-        mappedConfig = config.getJsonMapConfigNoCache(configName);
+        mappedConfig = Config.getInstance().getJsonMapConfig(configName);
         setConfigData();
     }
 
     public static KillappAssaultConfig load() {
-        return new KillappAssaultConfig();
+        return load(CONFIG_NAME);
     }
 
     public static KillappAssaultConfig load(String configName) {
+        if (CONFIG_NAME.equals(configName)) {
+            Map<String, Object> mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+            if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                return instance;
+            }
+            synchronized (KillappAssaultConfig.class) {
+                mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+                if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                    return instance;
+                }
+                instance = new KillappAssaultConfig(configName);
+                ModuleRegistry.registerModule(CONFIG_NAME, KillappAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+                return instance;
+            }
+        }
         return new KillappAssaultConfig(configName);
     }
 
-    public void reload() {
-        mappedConfig.clear();
-        mappedConfig.putAll(config.getJsonMapConfigNoCache(CONFIG_NAME));
-        setConfigData();
-    }
+
+
 
     private void setConfigData() {
         Object object = mappedConfig.get(ENABLED);
@@ -86,6 +98,10 @@ public class KillappAssaultConfig {
 
         object = mappedConfig.get(LEVEL);
         if(object != null) level = Config.loadIntegerValue(LEVEL, object);
+    }
+
+    public Map<String, Object> getMappedConfig() {
+        return mappedConfig;
     }
 
     // --- Getters and Setters (Original Methods) ---

@@ -1,9 +1,7 @@
 package com.networknt.chaos;
 
-import com.networknt.config.Config;
 import com.networknt.config.JsonMapper;
 import com.networknt.handler.LightHttpHandler;
-import com.networknt.utility.ModuleRegistry;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import org.slf4j.Logger;
@@ -24,17 +22,17 @@ public class ChaosMonkeyGetHandler implements LightHttpHandler {
 
     public ChaosMonkeyGetHandler() {
         logger.info("ChaosMonkeyGetHandler constructed");
-        config = (ChaosMonkeyConfig) Config.getInstance().getJsonObjectConfig(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyConfig.class);
+        config = ChaosMonkeyConfig.load();
     }
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
         if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyGetHandler.handleRequest starts.");
         Map<String, Object> configMap = new HashMap<>();
-        configMap.put(ExceptionAssaultHandler.class.getName(), ExceptionAssaultHandler.config);
-        configMap.put(KillappAssaultHandler.class.getName(), KillappAssaultHandler.config);
-        configMap.put(LatencyAssaultHandler.class.getName(), LatencyAssaultHandler.config);
-        configMap.put(MemoryAssaultHandler.class.getName(), MemoryAssaultHandler.config);
+        configMap.put(ExceptionAssaultHandler.class.getName(), ExceptionAssaultHandler.config != null ? ExceptionAssaultHandler.config : ExceptionAssaultConfig.load());
+        configMap.put(KillappAssaultHandler.class.getName(), KillappAssaultHandler.config != null ? KillappAssaultHandler.config : KillappAssaultConfig.load());
+        configMap.put(LatencyAssaultHandler.class.getName(), LatencyAssaultHandler.config != null ? LatencyAssaultHandler.config : LatencyAssaultConfig.load());
+        configMap.put(MemoryAssaultHandler.class.getName(), MemoryAssaultHandler.config != null ? MemoryAssaultHandler.config : MemoryAssaultConfig.load());
         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
         if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyGetHandler.handleRequest ends.");
         exchange.getResponseSender().send(JsonMapper.toJson(configMap));

@@ -1,18 +1,14 @@
 package com.networknt.chaos;
 
-import com.networknt.body.BodyHandler;
 import com.networknt.config.Config;
 import com.networknt.config.JsonMapper;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.httpstring.AttachmentConstants;
-import com.networknt.utility.ModuleRegistry;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,21 +18,33 @@ import java.util.Map;
  */
 public class ChaosMonkeyPostHandler implements LightHttpHandler {
     private static final Logger logger = LoggerFactory.getLogger(ChaosMonkeyPostHandler.class);
-    private static ChaosMonkeyConfig config;
     private static final String HANDLER_IS_DISABLED = "ERR10065";
 
     public ChaosMonkeyPostHandler() {
         logger.info("ChaosMonkeyPostHandler constructed");
-        config = ChaosMonkeyConfig.load();
-        ModuleRegistry.registerModule(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyPostHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(ChaosMonkeyConfig.CONFIG_NAME), null);
+        ChaosMonkeyConfig.load();
     }
 
     @Override
     public void handleRequest(final HttpServerExchange exchange) throws Exception {
         if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyPostHandler.handleRequest starts.");
+        ChaosMonkeyConfig config = ChaosMonkeyConfig.load();
         if(config.isEnabled()) {
-            String assault = exchange.getQueryParameters().get("assault").getFirst();
+            String assault = null;
+            if (exchange.getQueryParameters().get("assault") != null) {
+                assault = exchange.getQueryParameters().get("assault").getFirst();
+            }
+            if(assault == null) {
+                logger.error("Missing assault parameter in ChaosMonkeyPostHandler");
+                setExchangeStatus(exchange, "ERR10001", "assault");
+                return;
+            }
             Map<String, Object> bodyMap = (Map<String, Object>)exchange.getAttachment(AttachmentConstants.REQUEST_BODY);
+            if(bodyMap == null) {
+                logger.error("Missing request body in ChaosMonkeyPostHandler");
+                setExchangeStatus(exchange, "ERR10001", "request body");
+                return;
+            }
             // set the config object directly with the public static variable.
             switch (assault) {
                 case "com.networknt.chaos.ExceptionAssaultHandler":
@@ -53,6 +61,8 @@ public class ChaosMonkeyPostHandler implements LightHttpHandler {
                     break;
                 default:
                     logger.error("Invalid assault " + assault);
+                    setExchangeStatus(exchange, "ERR10001", "assault");
+                    return;
             }
             exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
             if(logger.isDebugEnabled()) logger.debug("ChaosMonkeyPostHandler.handleRequest ends.");
@@ -64,9 +74,4 @@ public class ChaosMonkeyPostHandler implements LightHttpHandler {
         }
     }
 
-    public static void reload() {
-        config.reload();
-        ModuleRegistry.registerModule(ChaosMonkeyConfig.CONFIG_NAME, ChaosMonkeyPostHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(ChaosMonkeyConfig.CONFIG_NAME), null);
-        if(logger.isInfoEnabled()) logger.info("ChaosMonkeyPostHandler reloaded.");
-    }
 }

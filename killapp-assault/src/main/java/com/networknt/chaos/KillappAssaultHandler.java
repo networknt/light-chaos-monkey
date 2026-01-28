@@ -1,9 +1,7 @@
 package com.networknt.chaos;
 
-import com.networknt.config.Config;
 import com.networknt.handler.Handler;
 import com.networknt.handler.MiddlewareHandler;
-import com.networknt.utility.ModuleRegistry;
 import com.networknt.server.Server;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
@@ -14,12 +12,13 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class KillappAssaultHandler implements MiddlewareHandler {
-    public static KillappAssaultConfig config = (KillappAssaultConfig) Config.getInstance().getJsonObjectConfig(KillappAssaultConfig.CONFIG_NAME, KillappAssaultConfig.class);
+    public static KillappAssaultConfig config;
     private static final Logger logger = LoggerFactory.getLogger(KillappAssaultHandler.class);
     private volatile HttpHandler next;
 
     public KillappAssaultHandler() {
         logger.info("KillappAssaultHandler constructed");
+        config = KillappAssaultConfig.load();
     }
 
     @Override
@@ -53,16 +52,6 @@ public class KillappAssaultHandler implements MiddlewareHandler {
     @Override
     public boolean isEnabled() {
         return config.isEnabled();
-    }
-
-    @Override
-    public void register() {
-        ModuleRegistry.registerModule(KillappAssaultConfig.CONFIG_NAME, KillappAssaultHandler.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(KillappAssaultConfig.CONFIG_NAME), null);
-    }
-
-    @Override
-    public void reload() {
-        config = (KillappAssaultConfig) Config.getInstance().getJsonObjectConfig(KillappAssaultConfig.CONFIG_NAME, KillappAssaultConfig.class);
     }
 
     private boolean isTrouble() {

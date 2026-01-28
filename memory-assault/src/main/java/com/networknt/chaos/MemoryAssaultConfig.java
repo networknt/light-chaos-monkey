@@ -9,6 +9,7 @@ import com.networknt.config.schema.NumberField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.networknt.server.ModuleRegistry;
 import java.util.Map;
 
 // <<< REQUIRED ANNOTATION FOR SCHEMA GENERATION >>>
@@ -30,8 +31,8 @@ public class MemoryAssaultConfig {
     public final static String MEMORY_FILL_INCREMENT_FRACTION = "memoryFillIncrementFraction";
     public final static String MEMORY_FILL_TARGET_FRACTION = "memoryFillTargetFraction";
 
-    private Map<String, Object> mappedConfig;
-    private final Config config;
+    private final Map<String, Object> mappedConfig;
+    private static volatile MemoryAssaultConfig instance;
 
     @BooleanField(
             configFieldName = ENABLED,
@@ -91,29 +92,40 @@ public class MemoryAssaultConfig {
 
     // --- Constructor and Loading Logic ---
 
-    private MemoryAssaultConfig() {
+    public MemoryAssaultConfig() {
         this(CONFIG_NAME);
     }
 
     private MemoryAssaultConfig(String configName) {
-        config = Config.getInstance();
-        mappedConfig = config.getJsonMapConfigNoCache(configName);
+        mappedConfig = Config.getInstance().getJsonMapConfig(configName);
         setConfigData();
     }
 
     public static MemoryAssaultConfig load() {
-        return new MemoryAssaultConfig();
+        return load(CONFIG_NAME);
     }
 
     public static MemoryAssaultConfig load(String configName) {
+        if (CONFIG_NAME.equals(configName)) {
+            Map<String, Object> mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+            if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                return instance;
+            }
+            synchronized (MemoryAssaultConfig.class) {
+                mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+                if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                    return instance;
+                }
+                instance = new MemoryAssaultConfig(configName);
+                ModuleRegistry.registerModule(CONFIG_NAME, MemoryAssaultConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+                return instance;
+            }
+        }
         return new MemoryAssaultConfig(configName);
     }
 
-    public void reload() {
-        mappedConfig.clear();
-        mappedConfig.putAll(config.getJsonMapConfigNoCache(CONFIG_NAME));
-        setConfigData();
-    }
+
+
 
     private void setConfigData() {
         Object object = mappedConfig.get(ENABLED);
@@ -137,6 +149,10 @@ public class MemoryAssaultConfig {
 
         object = mappedConfig.get(MEMORY_FILL_TARGET_FRACTION);
         if(object != null) memoryFillTargetFraction = Config.loadDoubleValue(MEMORY_FILL_TARGET_FRACTION, object).floatValue();
+    }
+
+    public Map<String, Object> getMappedConfig() {
+        return mappedConfig;
     }
 
     // --- Getters and Setters (Original Methods) ---

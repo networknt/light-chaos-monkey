@@ -24,6 +24,7 @@ import com.networknt.config.schema.StringField; // <<< REQUIRED IMPORT
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.networknt.server.ModuleRegistry;
 import java.util.Map;
 
 // <<< REQUIRED ANNOTATION FOR SCHEMA GENERATION >>>
@@ -48,44 +49,54 @@ public class ChaosMonkeyConfig {
     )
     boolean enabled;
 
-    final Config config;
-    Map<String, Object> mappedConfig;
+    private final Map<String, Object> mappedConfig;
+    private static volatile ChaosMonkeyConfig instance;
 
-    private ChaosMonkeyConfig() {
+    public ChaosMonkeyConfig() {
         this(CONFIG_NAME);
     }
 
     private ChaosMonkeyConfig(String configName) {
-        config = Config.getInstance();
-        mappedConfig = config.getJsonMapConfigNoCache(configName);
+        mappedConfig = Config.getInstance().getJsonMapConfig(configName);
         setConfigData();
     }
 
     public static ChaosMonkeyConfig load() {
-        return new ChaosMonkeyConfig();
+        return load(CONFIG_NAME);
     }
 
     public static ChaosMonkeyConfig load(String configName) {
+        if (CONFIG_NAME.equals(configName)) {
+            Map<String, Object> mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+            if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                return instance;
+            }
+            synchronized (ChaosMonkeyConfig.class) {
+                mappedConfig = Config.getInstance().getJsonMapConfig(configName);
+                if (instance != null && instance.getMappedConfig() == mappedConfig) {
+                    return instance;
+                }
+                instance = new ChaosMonkeyConfig(configName);
+                ModuleRegistry.registerModule(CONFIG_NAME, ChaosMonkeyConfig.class.getName(), Config.getNoneDecryptedInstance().getJsonMapConfigNoCache(CONFIG_NAME), null);
+                return instance;
+            }
+        }
         return new ChaosMonkeyConfig(configName);
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 
-
-    void reload() {
-        mappedConfig.clear();
-        mappedConfig.putAll(config.getJsonMapConfigNoCache(CONFIG_NAME));
-        setConfigData();
-    }
 
     private void setConfigData() {
         Object object = mappedConfig.get(ENABLED);
         if(object != null) enabled = Config.loadBooleanValue(ENABLED, object);
+    }
+
+    public Map<String, Object> getMappedConfig() {
+        return mappedConfig;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
 }
