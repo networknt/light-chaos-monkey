@@ -1,8 +1,5 @@
 package com.networknt.chaos;
 
-import com.networknt.config.Config;
-import com.networknt.handler.Handler;
-import com.networknt.handler.MiddlewareHandler;
 import com.networknt.handler.Handler;
 import com.networknt.handler.MiddlewareHandler;
 import io.undertow.Handlers;

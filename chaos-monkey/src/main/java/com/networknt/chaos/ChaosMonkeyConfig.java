@@ -50,7 +50,7 @@ public class ChaosMonkeyConfig {
     boolean enabled;
 
     private final Map<String, Object> mappedConfig;
-    private static ChaosMonkeyConfig instance;
+    private static volatile ChaosMonkeyConfig instance;
 
     public ChaosMonkeyConfig() {
         this(CONFIG_NAME);

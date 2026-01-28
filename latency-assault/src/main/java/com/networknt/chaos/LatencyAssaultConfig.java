@@ -29,7 +29,7 @@ public class LatencyAssaultConfig {
     public final static String LATENCY_RANGE_END = "latencyRangeEnd";
 
     private final Map<String, Object> mappedConfig;
-    private static LatencyAssaultConfig instance;
+    private static volatile LatencyAssaultConfig instance;
 
     @BooleanField(
             configFieldName = ENABLED,

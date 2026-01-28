@@ -26,7 +26,7 @@ public class KillappAssaultConfig {
     public final static String LEVEL = "level";
 
     private final Map<String, Object> mappedConfig;
-    private static KillappAssaultConfig instance;
+    private static volatile KillappAssaultConfig instance;
 
     @BooleanField(
             configFieldName = ENABLED,

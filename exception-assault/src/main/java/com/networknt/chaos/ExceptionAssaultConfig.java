@@ -26,7 +26,7 @@ public class ExceptionAssaultConfig {
     public final static String LEVEL = "level";
 
     private final Map<String, Object> mappedConfig;
-    private static ExceptionAssaultConfig instance;
+    private static volatile ExceptionAssaultConfig instance;
 
     @BooleanField(
             configFieldName = ENABLED,

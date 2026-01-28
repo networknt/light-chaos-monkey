@@ -32,7 +32,7 @@ public class MemoryAssaultConfig {
     public final static String MEMORY_FILL_TARGET_FRACTION = "memoryFillTargetFraction";
 
     private final Map<String, Object> mappedConfig;
-    private static MemoryAssaultConfig instance;
+    private static volatile MemoryAssaultConfig instance;
 
     @BooleanField(
             configFieldName = ENABLED,

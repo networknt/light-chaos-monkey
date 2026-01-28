@@ -1,6 +1,5 @@
 package com.networknt.chaos;
 
-import com.networknt.config.Config;
 import com.networknt.config.JsonMapper;
 import com.networknt.handler.LightHttpHandler;
 import io.undertow.server.HttpServerExchange;
