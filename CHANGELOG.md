@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.3.2](https://github.com/networknt/light-chaos-monkey/tree/2.3.2) (2026-02-02)
+
+
+**Merged pull requests:**
+
+
+- Issue44 [\#45](https://github.com/networknt/light-chaos-monkey/pull/45) ([stevehu](https://github.com/stevehu))
+
+
 ## [2.3.1](https://github.com/networknt/light-chaos-monkey/tree/2.3.1) (2025-09-19)
 
 
