@@ -5,7 +5,8 @@
   "properties" : {
     "enabled" : {
       "type" : "boolean",
-      "description" : "Enable the handlers if set to true to allow user to get or post configurations for the assault handlers."
+      "description" : "Enable the handlers if set to true to allow user to get or post configurations for the assault handlers.",
+      "default" : false
     }
   }
 }
