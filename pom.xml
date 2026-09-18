@@ -103,7 +103,6 @@
         <version.junit>5.11.4</version.junit>
         <version.undertow>2.4.1.Final</version.undertow>
         <version.snakeyaml>2.4</version.snakeyaml>
-        <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
         <version.versions-maven>2.14.2</version.versions-maven>
         <version.maven-javadoc>3.4.1</version.maven-javadoc>
         <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
@@ -254,19 +253,6 @@
         </testResources>
 
         <plugins>
-            <plugin>
-                <groupId>com.networknt</groupId>
-                <artifactId>javadoc-packagelist-maven-plugin</artifactId>
-                <version>${version.javadoc-packagelist-plugin}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>gen-package-list</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
