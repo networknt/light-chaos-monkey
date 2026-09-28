@@ -107,7 +107,7 @@
         <version.maven-javadoc>3.4.1</version.maven-javadoc>
         <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
         <version.maven-source>3.2.1</version.maven-source>
-        <version.maven-surefire>2.22.2</version.maven-surefire>
+        <version.maven-surefire>3.6.0</version.maven-surefire>
         <version.maven-failsafe>2.22.2</version.maven-failsafe>
         <version.build-helper-maven>3.3.0</version.build-helper-maven>
         <version.jacoco-maven>0.8.14</version.jacoco-maven>
@@ -289,14 +289,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.maven-surefire}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.0.1</version>
-                        <scope>compile</scope>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -441,7 +433,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.20.1</version>
+                <version>${version.maven-surefire}</version>
             </plugin>
         </plugins>
     </reporting>
