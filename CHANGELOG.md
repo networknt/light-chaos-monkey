@@ -1,5 +1,21 @@
 # Change Log
 
+## [2.4.0](https://github.com/networknt/light-chaos-monkey/tree/2.4.0) (2026-10-07)
+
+**Commits:**
+
+- upgrade to version 2.4.0 before release in master branch ([fc3963a](https://github.com/networknt/light-chaos-monkey/commit/fc3963a661139c7d0d71c8e8ad3a1e63c168f94b)) (by Steve Hu)
+- upgrade maven-javadoc to 3.12.0 from 3.4.1 ([6900f2b](https://github.com/networknt/light-chaos-monkey/commit/6900f2b61402de2a323d0c5bbbb52926ba70d821)) (by Steve Hu)
+- upgrade slf4j to 2.0.20 from 2.0.19 ([32d4d77](https://github.com/networknt/light-chaos-monkey/commit/32d4d776c363098ea7138a57ce6c5c7ec837697c)) (by Steve Hu)
+- upgrade jackson to 2.22.3 from 2.22.1 ([e1975bc](https://github.com/networknt/light-chaos-monkey/commit/e1975bcaeda93b84697d4385e13b0cecccab1325)) (by Steve Hu)
+- upgrade to version 2.3.8-SNAPSHOT after release in master branch ([65ee5a2](https://github.com/networknt/light-chaos-monkey/commit/65ee5a2f3652e11c3bfffb8710d1a88c6853d286)) (by Steve Hu)
+- upgrade slf4j to 2.0.19 from 2.0.17 ([198aae6](https://github.com/networknt/light-chaos-monkey/commit/198aae6e222a75488b49e06eed490548882871de)) (by Steve Hu)
+- upgrade maven-surefire to 3.6.0 ([4d56bdb](https://github.com/networknt/light-chaos-monkey/commit/4d56bdb8aa8d17b0ff9908efdd19d424d50163e8)) (by Steve Hu)
+- upgrade logback to 1.6.3 from 1.5.37 ([965a50b](https://github.com/networknt/light-chaos-monkey/commit/965a50ba3a8ee359aca2ccb89c576598495876b2)) (by Steve Hu)
+- Remove obsolete javadoc-packagelist-maven-plugin workaround ([2e9f860](https://github.com/networknt/light-chaos-monkey/commit/2e9f86072bd33664bc080135bdfe9d72b83fb34c)) (by Steve Hu)
+- upgrade central-publishing-maven to 0.11.0 from 0.7.0 ([bb91a21](https://github.com/networknt/light-chaos-monkey/commit/bb91a21de37ef032dee50eb45abef746ed7fb749)) (by Steve Hu)
+- upgrade to version 2.3.8-SNAPSHOT after release in master branch ([ce9ae8b](https://github.com/networknt/light-chaos-monkey/commit/ce9ae8b8d5e2fd1c4e653f2c66f0951ddd8f6d97)) (by Steve Hu)
+
 ## [2.3.7](https://github.com/networknt/light-chaos-monkey/tree/2.3.7) (2026-08-12)
 
 
