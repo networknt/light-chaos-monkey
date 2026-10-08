@@ -101,7 +101,7 @@
         <version.slf4j>2.0.20</version.slf4j>
         <version.logback>1.6.5</version.logback>
         <version.junit>5.11.4</version.junit>
-        <version.undertow>2.4.1.Final</version.undertow>
+        <version.undertow>2.4.4.Final</version.undertow>
         <version.snakeyaml>2.7</version.snakeyaml>
         <version.versions-maven>2.14.2</version.versions-maven>
         <version.maven-javadoc>3.12.0</version.maven-javadoc>
