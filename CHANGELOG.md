@@ -1,5 +1,18 @@
 # Change Log
 
+## [2.4.1](https://github.com/networknt/light-chaos-monkey/tree/2.4.1) (2026-10-11)
+
+**Commits:**
+
+- upgrade to version 2.4.1 before release in master branch ([fdd4105](https://github.com/networknt/light-chaos-monkey/commit/fdd410562fc25dff0bfe1045bccdf973dd76b876)) (by Steve Hu)
+- upgrade maven-gpg to 3.2.8 from 3.2.7 ([95baa11](https://github.com/networknt/light-chaos-monkey/commit/95baa1104cc0464c7df9638d9b30554ae2512e62)) (by Steve Hu)
+- upgrade maven-source to 3.4.0 ([eedccd7](https://github.com/networknt/light-chaos-monkey/commit/eedccd77740f12de935e8b6531cfab4a8c1df0d7)) (by Steve Hu)
+- build: upgrade JUnit to 6.1.3 ([bdefd90](https://github.com/networknt/light-chaos-monkey/commit/bdefd9028163a09ad319eb1edfadae8149a416d8)) (by Steve Hu)
+- upgrade udertow to 2.4.4.Final from 2.4.1.Final ([d8aa61c](https://github.com/networknt/light-chaos-monkey/commit/d8aa61caf4e30d1cfde2ea994392544fa0244deb)) (by Steve Hu)
+- upgrade logback to 1.6.5 from 1.6.3 ([0e5ae52](https://github.com/networknt/light-chaos-monkey/commit/0e5ae52fa92c92cb7fbe207731101ce05165ec97)) (by Steve Hu)
+- upgrade snakeyaml to 2.7 from 2.4 ([4ef80fb](https://github.com/networknt/light-chaos-monkey/commit/4ef80fbbd88d4a4aed106430ef38a6cc8de80b9a)) (by Steve Hu)
+- upgrade to version 2.4.1-SNAPSHOT after release in master branch ([06d160c](https://github.com/networknt/light-chaos-monkey/commit/06d160c02189c9e778bd7ae1f3d632c5b49984a1)) (by Steve Hu)
+
 ## [2.4.0](https://github.com/networknt/light-chaos-monkey/tree/2.4.0) (2026-10-07)
 
 **Commits:**
