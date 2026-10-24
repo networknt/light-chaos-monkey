@@ -48,3 +48,27 @@ When the configured methods are called in the application, the Chaos Monkey will
 * Memory Assault
 
 Memory Assaults attack the memory of the Java Virtual Machine.
+
+### YAML parser alignment
+
+This repository loads configuration through light-4j's `config` module; it has no
+direct SnakeYAML API calls or merged-YAML writer. The parent manages SnakeYAML
+Engine 3.0.1 for the transitive parser supplied by the
+[light-4j Engine migration](https://github.com/networknt/light-4j/pull/2813).
+Classic SnakeYAML 2.7 remains managed for compatibility with other transitive
+consumers and existing classic API exports. No unused direct parser dependency
+is added to the assault modules.
+
+Dependency management selects versions; it does not migrate an older `config`
+artifact or add Engine when that artifact does not depend on it. Builds must
+consume the Engine-migrated light-4j artifacts for the parser migration to take
+effect. Project and light-4j versions remain `2.4.2-SNAPSHOT` for the owner's
+coordinated release update.
+
+With the migrated `config`, YAML follows its YAML 1.2 Core settings. Review deployed
+configuration before rollout: `on`/`yes` become strings, leading-zero integers are
+decimal, legacy binary/underscore/sexagesimal forms become strings, and timestamps
+are strings. Quote text and use `true`/`false` for booleans. Duplicate-key policy,
+resource limits, supported tags, and decryption are controlled by light-4j; this
+repository does not override them. Parser alignment is not validation of deployed
+configuration files or a live chaos-assault qualification.
