@@ -48,3 +48,22 @@ When the configured methods are called in the application, the Chaos Monkey will
 * Memory Assault
 
 Memory Assaults attack the memory of the Java Virtual Machine.
+
+### Jackson 3 source qualification
+
+The Jackson 3 source-build workflow checks out the exact PR head and builds against
+the qualified light-4j candidate and bootstrap sources pinned in
+ci/jackson3-source-refs.json. It runs the full reactor (including the real POST
+handler binding test), audits resolved source origins, and uploads dependency trees
+and Surefire reports. It does not use published NetworkNT snapshots as substitutes
+for those sources.
+
+The parent Maven Enforcer rule rejects Jackson 2 runtime dependencies, including
+transitive dependencies, during ordinary builds. Jackson annotations remain
+allowed because Jackson 3 uses that compatible artifact. The chaos-monkey module
+explicitly declares Jackson 3 databind because its POST handler invokes the mapper
+returned by Config; the other assault modules do not invoke Jackson directly.
+
+After this change merges, dependent applications must update their source pin to
+the actual merge SHA and pass fresh source-build/distribution CI. A local build of
+this PR does not qualify an unchanged consumer pin.

@@ -96,6 +96,7 @@
     <version.central-publishing-maven>0.11.0</version.central-publishing-maven>
         <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.jackson>3.2.3</version.jackson>
         <version.light-4j>2.4.2-SNAPSHOT</version.light-4j>
         <version.slf4j>2.0.20</version.slf4j>
         <version.logback>1.6.5</version.logback>
@@ -131,6 +132,11 @@
                 <version>${version.junit}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${version.jackson}</version>
             </dependency>
             <!-- Modules in this project -->
             <dependency>
@@ -240,6 +246,32 @@
         </testResources>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <id>reject-jackson2-runtime</id>
+                        <goals><goal>enforce</goal></goals>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <excludes>
+                                        <exclude>com.fasterxml.jackson.core:jackson-core</exclude>
+                                        <exclude>com.fasterxml.jackson.core:jackson-databind</exclude>
+                                        <exclude>com.fasterxml.jackson.datatype:*</exclude>
+                                        <exclude>com.fasterxml.jackson.module:*</exclude>
+                                        <exclude>com.fasterxml.jackson.dataformat:*</exclude>
+                                    </excludes>
+                                    <message>Use Jackson 3 runtime dependencies. Jackson annotations remain compatible.</message>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>

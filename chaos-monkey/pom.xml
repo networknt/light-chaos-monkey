@@ -15,6 +15,11 @@
     <description>Lightweight Chaos Monkey for testing microservices resilience</description>
 
     <dependencies>
+        <!-- ChaosMonkeyPostHandler invokes the ObjectMapper returned by Config. -->
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>config</artifactId>
