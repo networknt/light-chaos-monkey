@@ -48,3 +48,31 @@ When the configured methods are called in the application, the Chaos Monkey will
 * Memory Assault
 
 Memory Assaults attack the memory of the Java Virtual Machine.
+
+### Jackson 3 source qualification
+
+The Jackson 3 source-build workflow checks out the exact PR head and builds against
+the qualified light-4j candidate and bootstrap sources pinned in
+ci/jackson3-source-refs.json. It runs the full reactor (including the real POST
+handler binding test), audits resolved source origins, and uploads dependency trees
+and Surefire reports. It does not use published NetworkNT snapshots as substitutes
+for those sources.
+
+The parent Maven Enforcer rule rejects Jackson 2 runtime dependencies, including
+transitive dependencies, during ordinary builds. Jackson annotations remain
+allowed because Jackson 3 uses that compatible artifact. The chaos-monkey module
+explicitly declares Jackson 3 databind, whose version is inherited from the
+light-4j dependency-management BOM rather than independently pinned here, because its POST handler invokes the mapper
+returned by Config; the other assault modules do not invoke Jackson directly.
+
+After this change merges, dependent applications must update their source pin to
+the actual merge SHA and pass fresh source-build/distribution CI. A local build of
+this PR does not qualify an unchanged consumer pin.
+
+The POST regression sends real JSON through BodyHandler before exercising all
+four assault conversion branches. It also checks numeric-string coercion, empty
+object defaults, malformed JSON, missing/empty bodies, unknown assaults, unknown properties and invalid
+integer values, including preservation of prior configs after rejected requests.
+It records existing error semantics: ERR10001 resolves to HTTP 401 for missing
+bodies/unknown assaults, and invalid numeric conversion or unknown-property rejection propagates as HTTP 500.
+Changing those production error codes is outside this dependency cleanup.
