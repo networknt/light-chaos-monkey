@@ -96,7 +96,6 @@
     <version.central-publishing-maven>0.11.0</version.central-publishing-maven>
         <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.jackson>3.2.3</version.jackson>
         <version.light-4j>2.4.2-SNAPSHOT</version.light-4j>
         <version.slf4j>2.0.20</version.slf4j>
         <version.logback>1.6.5</version.logback>
@@ -134,9 +133,11 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>tools.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${version.jackson}</version>
+                <groupId>com.networknt</groupId>
+                <artifactId>light-4j</artifactId>
+                <version>${version.light-4j}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!-- Modules in this project -->
             <dependency>

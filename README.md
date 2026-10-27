@@ -61,9 +61,18 @@ for those sources.
 The parent Maven Enforcer rule rejects Jackson 2 runtime dependencies, including
 transitive dependencies, during ordinary builds. Jackson annotations remain
 allowed because Jackson 3 uses that compatible artifact. The chaos-monkey module
-explicitly declares Jackson 3 databind because its POST handler invokes the mapper
+explicitly declares Jackson 3 databind, whose version is inherited from the
+light-4j dependency-management BOM rather than independently pinned here, because its POST handler invokes the mapper
 returned by Config; the other assault modules do not invoke Jackson directly.
 
 After this change merges, dependent applications must update their source pin to
 the actual merge SHA and pass fresh source-build/distribution CI. A local build of
 this PR does not qualify an unchanged consumer pin.
+
+The POST regression sends real JSON through BodyHandler before exercising all
+four assault conversion branches. It also checks numeric-string coercion, empty
+object defaults, malformed JSON, missing/empty bodies, unknown assaults and invalid
+integer values, including preservation of prior configs after rejected requests.
+It records existing error semantics: ERR10001 resolves to HTTP 401 for missing
+bodies/unknown assaults, and invalid numeric conversion propagates as HTTP 500.
+Changing those production error codes is outside this dependency cleanup.
