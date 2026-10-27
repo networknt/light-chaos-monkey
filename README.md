@@ -71,8 +71,8 @@ this PR does not qualify an unchanged consumer pin.
 
 The POST regression sends real JSON through BodyHandler before exercising all
 four assault conversion branches. It also checks numeric-string coercion, empty
-object defaults, malformed JSON, missing/empty bodies, unknown assaults and invalid
+object defaults, malformed JSON, missing/empty bodies, unknown assaults, unknown properties and invalid
 integer values, including preservation of prior configs after rejected requests.
 It records existing error semantics: ERR10001 resolves to HTTP 401 for missing
-bodies/unknown assaults, and invalid numeric conversion propagates as HTTP 500.
+bodies/unknown assaults, and invalid numeric conversion or unknown-property rejection propagates as HTTP 500.
 Changing those production error codes is outside this dependency cleanup.

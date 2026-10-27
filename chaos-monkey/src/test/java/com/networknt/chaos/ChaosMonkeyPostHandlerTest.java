@@ -119,6 +119,17 @@ class ChaosMonkeyPostHandlerTest {
     }
 
     @Test
+    void rejectsUnknownPropertiesWithoutReplacingAnyConfiguration() throws Exception {
+        for (String assault : new String[]{"Exception", "Killapp", "Latency", "Memory"}) {
+            var response = post(assault, "{\"level\":3,\"extra\":1}");
+            // The shared mapper rejects unknown properties. As with invalid
+            // numeric values, the existing handler lets conversion errors propagate.
+            assertEquals(500, response.statusCode(), assault + ": " + response.body());
+            assertConfigurationsUnchanged();
+        }
+    }
+
+    @Test
     void preservesNumericStringCoercion() throws Exception {
         var response = post("Latency", "{\"level\":\"7\"}");
         assertEquals(200, response.statusCode(), response.body());
