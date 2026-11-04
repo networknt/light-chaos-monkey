@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.5.0](https://github.com/networknt/light-chaos-monkey/tree/2.5.0) (2026-11-04)
+
+**Commits:**
+
+- upgrade to version 2.5.0 before release in 2.x branch ([d906f0e](https://github.com/networknt/light-chaos-monkey/commit/d906f0ea8888a0c80ebb67af8ed7386d415dba51)) (by Steve Hu)
+- upgrade to version 2.5.0-SNAPSHOT after release in 2.x branch ([9a0a291](https://github.com/networknt/light-chaos-monkey/commit/9a0a291fc632b859e23705c06822566c0386f91d)) (by Steve Hu)
+- upgrade jackson to 2.22.4 from 2.22.3 ([b070dff](https://github.com/networknt/light-chaos-monkey/commit/b070dff20cd4a5e79d82caa44b279a65e12b6b43)) (by Steve Hu)
+- upgrade logback to 1.6.6 from 1.6.5 ([2fff8ef](https://github.com/networknt/light-chaos-monkey/commit/2fff8ef04b351f1fb650fd3f234e0728620fdd8a)) (by Steve Hu)
+- upgrade to version 2.4.2-SNAPSHOT after release in master branch ([e870706](https://github.com/networknt/light-chaos-monkey/commit/e870706fa86ba311212fc24900ced76599758563)) (by Steve Hu)
+
 ## [2.4.1](https://github.com/networknt/light-chaos-monkey/tree/2.4.1) (2026-10-11)
 
 **Commits:**
