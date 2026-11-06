@@ -112,7 +112,7 @@
         <version.build-helper-maven>3.3.0</version.build-helper-maven>
         <version.jacoco-maven>0.8.14</version.jacoco-maven>
         <version.maven-deploy>3.0.0</version.maven-deploy>
-        <version.maven-compiler>3.10.1</version.maven-compiler>
+        <version.maven-compiler>3.16.0</version.maven-compiler>
         <version.maven-gpg>3.2.8</version.maven-gpg>
     </properties>
 
