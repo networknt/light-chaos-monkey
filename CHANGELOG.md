@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.5.1](https://github.com/networknt/light-chaos-monkey/tree/2.5.1) (2026-11-21)
+
+**Commits:**
+
+- upgrade to version 2.5.1 before release in 2.x branch ([8462a23](https://github.com/networknt/light-chaos-monkey/commit/8462a237caf9d0cc7e05264cfd4e9a01b01aaaa1)) (by Steve Hu)
+- upgrade logback to 1.6.8 from 1.6.7 ([9ef0a61](https://github.com/networknt/light-chaos-monkey/commit/9ef0a61f4d88367ca4ba0298c818b38e1df0a7ea)) (by Steve Hu)
+- upgrade logback to 1.6.7 from 1.6.6 ([cdc3506](https://github.com/networknt/light-chaos-monkey/commit/cdc35069c5109afe63b51118f65a9f234e3acbd3)) (by Steve Hu)
+- upgrade maven-compiler to 3.16.0 from 3.10.1 ([ddf112e](https://github.com/networknt/light-chaos-monkey/commit/ddf112e173c8a85e58d5cac44df767758fb2640f)) (by Steve Hu)
+- upgrade maven-surefire to 3.6.1 from 3.6.0 ([5a66266](https://github.com/networknt/light-chaos-monkey/commit/5a66266a7d936d86660b705805e64fd0a21e32e7)) (by Steve Hu)
+- upgrade to version 2.5.1-SNAPSHOT after release in 2.x branch ([0cc1b97](https://github.com/networknt/light-chaos-monkey/commit/0cc1b977721a554d4e60ef6f3a89402e52a935c4)) (by Steve Hu)
+
 ## [2.5.0](https://github.com/networknt/light-chaos-monkey/tree/2.5.0) (2026-11-04)
 
 **Commits:**
